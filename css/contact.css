@@ -1,0 +1,82 @@
+.get_in_touch{
+    max-width:800px;
+    margin:50px auto;
+    position: relative;
+    box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.1);
+    padding:30px;
+}
+
+.get_in_touch .title{
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 3em;
+    line-height: 48px;
+    padding-bottom: 20px;
+    color:#5543ca;
+    background: linear-gradient(to right, #f4524d 0%, #5543ca 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-form .form-field{
+    position: relative;
+    margin: 32px 0px;
+}
+
+.contact-form .input-text{
+    display: block;
+    width:100%;
+    height:36px;
+    border-width:0 0 2px 0;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
+    border:None;
+    border-bottom: 2px solid #ccc;
+    padding:5px 10px;
+    box-sizing: border-box;
+}
+
+.contact-form .input-text:focus {
+    outline: none;
+    border-color: #4CAF50; /* Change the border color when the input is focused */
+  }
+  
+  .contact-form .label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+  }
+
+  .contact-form .text-center {
+    margin:0 auto;
+  }
+
+  .contact-form .btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .contact-form .btn:hover {
+    background-color: #45a049;
+  }
+
+  /* contact us css */
+
+  #name-error, #email-error, #phone-error, #message-error{
+    color:red;
+  }
+
+  
+  
+  
