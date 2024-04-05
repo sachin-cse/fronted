@@ -44,7 +44,7 @@ $activePage = basename($_SERVER['PHP_SELF']);
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item <?php if($activePage == 'site_settings.php'){echo 'activeShow';}?>">
-  <a class="nav-link collapsed <?php if($activePage == 'site_settings.php'){echo 'active_show';}?>" href="javascritp:void(0);" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+  <a class="nav-link drop-dwon collapsed <?php if($activePage == 'site_settings.php'){echo 'active_show';}?>" href="javascritp:void(0);" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
     <i class="fas fa-fw fa-cog"></i>
     <span>Settings</span>
   </a>

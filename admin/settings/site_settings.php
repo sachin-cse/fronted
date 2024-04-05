@@ -56,8 +56,8 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="footer_title" class="col-form-label">Site Footer Title</label>
-                            <input type="text" class="form-control" id="footer_title" name="footer_title" placeholder="Site Footer title">
+                            <label for="footer_title" class="col-form-label">Site Footer Phone Number</label>
+                            <input type="text" class="form-control" id="footer_phone" name="footer_phone" placeholder="Site Footer Phone Number">
                         </div>
 
                         <div class="form-group col-6">
@@ -74,8 +74,42 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
                             <label for="footer_email" class="col-form-label">Site Footer Links</label>
                             <table class="table table-bordered" id="dynamic_field">
                                     <tr><td><input type="text" name="footer_links[]" id="footer_links" class="form-control" placeholder="Footer Links"></td></tr>
-                                    <td><button name="add" id="add">Add</button></td>
+                                    <td><a href="javascript:void(0);" id="add">Add</a></td>
                             </table>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label for="smtp_driver" class="col-form-label">SMTP Driver</label>
+                            <input type="text" class="form-control" id="smtp_driver" value="SMTP" name="smtp_driver" placeholder="SMTP Driver" />
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label for="smtp_host" class="col-form-label">SMTP Host</label>
+                            <input type="text" class="form-control" id="smtp_host" name="smtp_host" placeholder="SMTP Host" />
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label for="smtp_port" class="col-form-label">SMTP Port</label>
+                            <input type="text" class="form-control" id="smtp_port" name="smtp_port" placeholder="SMTP Port" />
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label for="smtp_username" class="col-form-label">SMTP Username</label>
+                            <input type="text" class="form-control" id="smtp_username" name="smtp_username" placeholder="SMTP Username" />
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label for="smtp_password" class="col-form-label">SMTP Password</label>
+                            <input type="text" class="form-control" id="smtp_password" name="smtp_password" placeholder="SMTP Password" />
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label for="smtp_encryption" class="col-form-label">SMTP Encryption</label>
+
+                            <select name="smtp_encryption" id="smtp_encryption">
+                                <option value="tls">TLS</option>
+                                <option value="ssl">SSL</option>
+                            </select> 
                         </div>
 
                         <div class="modal-footer">

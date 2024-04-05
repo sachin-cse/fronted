@@ -193,38 +193,38 @@ $(document).ready(function(){
 
     // add site settings
     $('#site_settings').validate({
-        // rules:{
-        //     first_name: "required",
-        //     last_name: "required",
-        //     email: {
-        //         email: true,
-        //         required:true
-        //     },
-        //     role: "required",
-        //     status: "required",
-        //     password: {
-        //         minlength: 8,
-        //         maxlength: 8,
-        //         required: true,
-        //     }
-
-        // },
-        // messages:{
-        //     first_name: "Please enter first name",
-        //     last_name : "Please enter last name",
-        //     email:{
-        //         email: "Please enter your valid email",
-        //         required:"Please enter your email"
-        //     },
-        //     role:"Please select your role",
-        //     status:"Please select your status",
-        //     password: {
-        //         minlength:"Password must be at least {0} characters long",
-        //         maxlength:"Password must be maximum {0} characters long",
-        //         required : "Please enter your password"
-
-        //     }
-        // },
+        rules:{
+            site_title: "required",
+            site_description: "required",
+            site_logo: "required",
+            site_favicon: "required",
+            footer_phone: "required",
+            footer_description: "required",
+            footer_email: "required",
+            "footer_links[]" : "required",
+            smtp_driver: "required",
+            smtp_host: "required",
+            smtp_port: "required",
+            smtp_username: "required",
+            smtp_encryption: "required",
+            smtp_password: "required"
+        },
+        messages:{
+            site_title: "Site Title is required field",
+            site_description : "Site description is required field",
+            site_logo: "Site Logo is required field",
+            site_favicon: "Site Favicon is required field",
+            footer_phone: "Footer Phone is required field",
+            footer_description: "Footer Description is required",
+            footer_email: "Footer Email is required field",
+            "footer_links[]": "Footer Links is required field",
+            smtp_driver: "SMTP Driver is required field",
+            smtp_host: "SMTP Host is required field",
+            smtp_port: "SMTP Port is required field",
+            smtp_username: "SMTP Username is required field",
+            smtp_encryption: "SMTP Encryption is required field",
+            smtp_password: "SMTP Password is required field"
+        },
         submitHandler: function(form){
             // ('#addadminModel').modal('show');
             var formData = new FormData(form);
@@ -239,12 +239,10 @@ $(document).ready(function(){
                 success: function(data){
                     if(data.status == 201){
                         toastr.success(data.message);
-                    } else if(data.status == 200){
-                        toastr.error(data.message);
                     } else {
                         toastr.error(data.message);
                     }
-                    // setTimeout(function(){ window.location.reload(); }, 2000);
+                    setTimeout(function(){ window.location.reload(); }, 2000);
                 },
                 error: function (error) {
                     console.log(error.status + ':' + error.statusText,error.responseText);
@@ -487,26 +485,28 @@ $(document).ready(function(){
         });
     });
 
-    $('.nav-link').click(function () {
-        var icon = $(this).find('.fa-cog');
-
-        // Toggle the rotation class
-        icon.toggleClass('rotate-down');
-    });
-
     // footer add links
     var i = 1;
     $('#add').on('click', function(){
         // alert(1);
         i++;
         $('#dynamic_field').append(`<tr id="row${i}"><td><input type="text" name="footer_links[]" id="footer_links" class="form-control" placeholder="Footer Links"></td>
-        <td><button name="remove" id="${i++}" class="form-control remove_field">Remove</button></td></tr>`);
+        <td><a href="javascript:void(0);" id="${i++}" class="form-control remove_field">Remove</a></td></tr>`);
 
         $('.remove_field').on('click', function(){
             var id = $(this).attr('id');
             $('#row'+id).remove();
         });
     });
+
+    // drop down icon change
+    // Check if the collapse is in the 'show' state
+    if ($('#collapseTwo').hasClass('show')) {
+        $('.nav-item.activeShow').find('a:first').removeClass('collapsed');
+    } else {
+        $('.nav-item.activeShow').find('a:first').addClass('collapsed');
+    }
+
 
 
 });
