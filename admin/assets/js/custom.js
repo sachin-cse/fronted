@@ -190,14 +190,17 @@ $(document).ready(function(){
         }
     });
 
-
     // add site settings
     $('#site_settings').validate({
         rules:{
             site_title: "required",
             site_description: "required",
-            site_logo: "required",
-            site_favicon: "required",
+            site_logo: {
+                required: $('#existing_site_logo').val() ? false:true,
+            },
+            site_favicon: {
+                required: $('#existing_fav_icon').val() ? false:true,
+            },
             footer_phone: "required",
             footer_description: "required",
             footer_email: "required",
