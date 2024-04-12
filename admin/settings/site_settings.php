@@ -35,7 +35,8 @@ $row = mysqli_fetch_assoc($result);
         
             <div class="card-body">
                 <!-- <p>Hare Krishna</p> -->
-                <form action="javascript:void(0);"  id="site_settings" method="post">
+                <form action="javascript:void(0);" id="site_settings" method="post">
+                    <input type="hidden" value="<?php echo $row['id']; ?>" name="hidden_id">
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="site_title" class="col-form-label">Site Title</label>
@@ -88,7 +89,13 @@ $row = mysqli_fetch_assoc($result);
                                 $footer_links = explode(',', $row['site_footer_links']);
                                 foreach($footer_links as $footer_link){
                                     ?>
-                                        <tr><td><input type="text" name="footer_links[]" id="footer_links" value="<?php echo $footer_link; ?>" class="form-control" placeholder="Footer Links"></td></tr>
+                                        <tr>
+                                        <td><input type="text" name="footer_links[]" id="footer_links" value="<?php echo $footer_link; ?>" class="form-control" placeholder="Footer Links">
+                                        </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="form-control remove_field">Remove</a>
+                                            </td>
+                                        </tr>
                                     <?php
                                 }
                                 ?>

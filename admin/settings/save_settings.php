@@ -3,6 +3,10 @@ include($_SERVER['DOCUMENT_ROOT'].'/fronted/database/connection.php');
 include(dirname(dirname(__FILE__)).'\Helper\Apphelper.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    $hidden_id = isset($_POST['hidden_id']) ? $_POST['hidden_id'] : '';
+    $existing_site_logo = isset($_POST['existing_site_logo']) ? $_POST['existing_site_logo'] : '';
+    $existing_fav_icon = isset($_POST['existing_fav_icon']) ? $_POST['existing_fav_icon'] : '';
     $site_title = $_POST['site_title'];
     $site_description = $_POST['site_description'];
     $site_logo = isset($_FILES['site_logo']['name']) ? $_FILES['site_logo']['name'] :'';
@@ -50,7 +54,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
   try{
-    $sql = "INSERT INTO site_settings (site_tittle, site_description, site_logo, site_favicon, smtp_driver, smtp_host, smtp_port, smtp_username, smtp_encryption, smtp_password, site_footer_links, site_footer_email, site_footer_description, site_footer_phone_number, create_user) VALUES ('$site_title', '$site_description', '$site_logo', '$site_favicon', '$smtp_driver', '$smtp_host', '$smtp_port', '$smtp_username', '$smtp_encryption', '$smtp_password', '$footer_links', '$footer_email', ' $footer_description', '$footer_phone', '$createUserId')";
+
+    if(!empty($hidden_id)){
+        $sql = "UPDATE `site_settings` SET `site_tittle` = '$site_title', `site_description` = '$site_description', `site_logo` = '$existing_site_logo', `site_favicon` = '$existing_fav_icon', `smtp_driver` = '$smtp_driver', `smtp_host` = '$smtp_host', `smtp_port` = '$smtp_port', `smtp_username` = '$smtp_username', `smtp_password` = '$smtp_password', `site_footer_links` = '$footer_links', `site_footer_email` = '$footer_email', `site_footer_description` = '$footer_description', `site_footer_phone_number` = '$footer_phone', `create_user` = '$createUserId' WHERE `id` = '$hidden_id'";
+    } else {
+        $sql = "INSERT INTO site_settings (site_tittle, site_description, site_logo, site_favicon, smtp_driver, smtp_host, smtp_port, smtp_username, smtp_encryption, smtp_password, site_footer_links, site_footer_email, site_footer_description, site_footer_phone_number, create_user) VALUES ('$site_title', '$site_description', '$site_logo', '$site_favicon', '$smtp_driver', '$smtp_host', '$smtp_port', '$smtp_username', '$smtp_encryption', '$smtp_password', '$footer_links', '$footer_email', ' $footer_description', '$footer_phone', '$createUserId')";
+    }
 
     $runQuery = mysqli_query($conn, $sql);
 
