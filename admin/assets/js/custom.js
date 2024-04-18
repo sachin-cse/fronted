@@ -493,13 +493,13 @@ $(document).ready(function(){
     $('#add').on('click', function(){
         // alert(1);
         i++;
-        $('#dynamic_field').append(`<tr id="row${i}"><td><input type="text" name="footer_links[]" id="footer_links" class="form-control" placeholder="Footer Links"></td>
+        $('#dynamic_field').append(`<tr id="row${i}" class="dynamic_row"><td><input type="text" name="footer_links[]" id="footer_links" class="form-control" placeholder="Footer Links"></td>
         <td><a href="javascript:void(0);" id="${i++}" class="form-control remove_field">Remove</a></td></tr>`);
+        
+    });
 
-        $('.remove_field').on('click', function(){
-            var id = $(this).attr('id');
-            $('#row'+id).remove();
-        });
+    $('#dynamic_field').on('click', '.remove_field', function(){
+        $(this).closest('tr').remove();
     });
 
     // drop down icon change

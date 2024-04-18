@@ -87,7 +87,7 @@ $row = mysqli_fetch_assoc($result);
                             <table class="table table-bordered" id="dynamic_field">
                                 <?php
                                 $footer_links = explode(',', $row['site_footer_links']);
-                                foreach($footer_links as $footer_link){
+                                foreach($footer_links as $key=>$footer_link){
                                     ?>
                                         <tr>
                                         <td><input type="text" name="footer_links[]" id="footer_links" value="<?php echo $footer_link; ?>" class="form-control" placeholder="Footer Links">

@@ -64,10 +64,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $runQuery = mysqli_query($conn, $sql);
 
     if($runQuery){
+
         $uploadFolderSiteLogo = "./upload/site_logo/" . $site_logo;
         $uploadFolderSiteFavicon = "./upload/site_favicon/" . $site_favicon;
-        move_uploaded_file($site_logoTemp, $uploadFolderSiteLogo);
-        move_uploaded_file($site_faviconTemp, $uploadFolderSiteFavicon);
+        if(file_exists($uploadFolderSiteLogo.'/'.$existing_site_logo) && !empty($site_logo)){
+            unlink($uploadFolderSiteLogo.'/'.$existing_site_logo);
+        } else {
+            move_uploaded_file($site_logoTemp, $uploadFolderSiteLogo);
+        }
+
+        if(file_exists($uploadFolderSiteLogo.'/'.$existing_fav_icon) && !empty($site_favicon)){
+            unlink($uploadFolderSiteLogo.'/'.$existing_fav_icon);
+        } else {
+            move_uploaded_file($site_logoTemp, $uploadFolderSiteFavicon);
+        }
         echo (json_encode(array('message' => 'Site Settings Save successfully', 'status' => 201)));
     } else {
         echo (json_encode(array('message' => 'Fail to save site settings', 'status' => 500)));
