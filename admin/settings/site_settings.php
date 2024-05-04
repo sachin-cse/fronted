@@ -53,7 +53,7 @@ $row = mysqli_fetch_assoc($result);
                             <label for="site_logo" class="col-form-label">Site Logo</label>
                             <?php
                             $site_logo = !empty($row['site_logo']) ? $base_url.'fronted/admin/settings/upload/site_logo/'.$row['site_logo'].'':$base_url.'/fronted/admin/upload/noimage.png';
-                            $site_favicon = !empty($row['site_favicon']) ? $base_url.'fronted/admin/settings/upload/site_logo/'.$row['site_favicon'].'':$base_url.'/fronted/admin/upload/noimage.png';
+                            $site_favicon = !empty($row['site_favicon']) ? $base_url.'fronted/admin/settings/upload/site_favicon/'.$row['site_favicon'].'':$base_url.'/fronted/admin/upload/noimage.png';
                             ?>
                             <img src="<?php echo $site_logo ?>" id="sitelogo" height="50" width="50">
                             <input type="file" class="form-control" id="site_logo" name="site_logo" accept=".gif, .jpg, .png" onchange="previewImage('sitelogo', this)">
@@ -86,20 +86,31 @@ $row = mysqli_fetch_assoc($result);
                             <label for="footer_email" class="col-form-label">Site Footer Links</label>
                             <table class="table table-bordered" id="dynamic_field">
                                 <?php
+                                $count = 1;
                                 $footer_links = explode(',', $row['site_footer_links']);
                                 foreach($footer_links as $key=>$footer_link){
                                     ?>
                                         <tr>
                                         <td><input type="text" name="footer_links[]" id="footer_links" value="<?php echo $footer_link; ?>" class="form-control" placeholder="Footer Links">
                                         </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="form-control remove_field">Remove</a>
-                                            </td>
+                                        <?php 
+                                        if($count == 1){
+                                            ?>
+                                                <td><a href="javascript:void(0);" id="add">Add</a></td>
+                                            <?php
+                                        } else{
+                                            ?>
+                                                <td>
+                                                    <a href="javascript:void(0);" class="form-control remove_field">Remove</a>
+                                                </td>
+                                            <?php
+                                        }
+                                        $count++;
+                                        ?>
                                         </tr>
                                     <?php
                                 }
                                 ?>
-                                <td><a href="javascript:void(0);" id="add">Add</a></td>
                             </table>
                         </div>
 

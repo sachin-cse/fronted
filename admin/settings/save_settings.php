@@ -25,12 +25,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $smtp_encryption = $_POST['smtp_encryption'];
 
     $createUserId = get_current_user_id();
-
     // echo $createUserId; exit;
-
+    
     // upload images
     $uploadFolderSiteLogo = "./upload/site_logo";
     $uploadFolderSiteFavicon = "./upload/site_favicon";
+
+    if (!empty($existing_site_logo) && $site_logo && $site_logo != $existing_site_logo) {
+        $existingSiteLogoPath = "./upload/site_logo/" . $existing_site_logo;
+        if (file_exists($existingSiteLogoPath)) {
+            unlink($existingSiteLogoPath);
+        }
+    }
+
+    // Check if there's an existing favicon with the same filename and unlink it
+    if (!empty($existing_fav_icon) && $site_favicon && $site_favicon != $existing_fav_icon) {
+        $existingFavIconPath = "./upload/site_favicon/" . $existing_fav_icon;
+        if (file_exists($existingFavIconPath)) {
+            unlink($existingFavIconPath);
+        }
+    }
+  
 
     try{
         if(!file_exists($uploadFolderSiteLogo)){
@@ -52,11 +67,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo (json_encode(array('message' => $e->getMessage(), 'status' => 500)));
     }
 
-
+    // $filePath = fopen($_FILES["site_logo"]["tmp_name"], 'r');
+    // echo $filePath; exit;
   try{
-
+    $siteLogoupdateorNot =  $site_logo ? $site_logo:$existing_site_logo;
+    $siteFaviconupdateorNot = $site_favicon ? $site_favicon:$existing_fav_icon;
     if(!empty($hidden_id)){
-        $sql = "UPDATE `site_settings` SET `site_tittle` = '$site_title', `site_description` = '$site_description', `site_logo` = '$existing_site_logo', `site_favicon` = '$existing_fav_icon', `smtp_driver` = '$smtp_driver', `smtp_host` = '$smtp_host', `smtp_port` = '$smtp_port', `smtp_username` = '$smtp_username', `smtp_password` = '$smtp_password', `site_footer_links` = '$footer_links', `site_footer_email` = '$footer_email', `site_footer_description` = '$footer_description', `site_footer_phone_number` = '$footer_phone', `create_user` = '$createUserId' WHERE `id` = '$hidden_id'";
+        $sql = "UPDATE `site_settings` SET `site_tittle` = '$site_title', `site_description` = '$site_description', `site_logo` = '$siteLogoupdateorNot', `site_favicon` = '$siteFaviconupdateorNot', `smtp_driver` = '$smtp_driver', `smtp_host` = '$smtp_host', `smtp_port` = '$smtp_port', `smtp_username` = '$smtp_username', `smtp_password` = '$smtp_password', `site_footer_links` = '$footer_links', `site_footer_email` = '$footer_email', `site_footer_description` = '$footer_description', `site_footer_phone_number` = '$footer_phone', `create_user` = '$createUserId' WHERE `id` = '$hidden_id'";
     } else {
         $sql = "INSERT INTO site_settings (site_tittle, site_description, site_logo, site_favicon, smtp_driver, smtp_host, smtp_port, smtp_username, smtp_encryption, smtp_password, site_footer_links, site_footer_email, site_footer_description, site_footer_phone_number, create_user) VALUES ('$site_title', '$site_description', '$site_logo', '$site_favicon', '$smtp_driver', '$smtp_host', '$smtp_port', '$smtp_username', '$smtp_encryption', '$smtp_password', '$footer_links', '$footer_email', ' $footer_description', '$footer_phone', '$createUserId')";
     }
@@ -67,17 +84,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $uploadFolderSiteLogo = "./upload/site_logo/" . $site_logo;
         $uploadFolderSiteFavicon = "./upload/site_favicon/" . $site_favicon;
-        if(file_exists($uploadFolderSiteLogo.'/'.$existing_site_logo) && !empty($site_logo)){
-            unlink($uploadFolderSiteLogo.'/'.$existing_site_logo);
-        } else {
-            move_uploaded_file($site_logoTemp, $uploadFolderSiteLogo);
-        }
 
-        if(file_exists($uploadFolderSiteLogo.'/'.$existing_fav_icon) && !empty($site_favicon)){
-            unlink($uploadFolderSiteLogo.'/'.$existing_fav_icon);
-        } else {
-            move_uploaded_file($site_logoTemp, $uploadFolderSiteFavicon);
-        }
+        move_uploaded_file($site_logoTemp, $uploadFolderSiteLogo);
+        move_uploaded_file($site_faviconTemp, $uploadFolderSiteFavicon);
         echo (json_encode(array('message' => 'Site Settings Save successfully', 'status' => 201)));
     } else {
         echo (json_encode(array('message' => 'Fail to save site settings', 'status' => 500)));

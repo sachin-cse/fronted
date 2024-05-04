@@ -574,6 +574,14 @@ ClassicEditor
     console.error( error );
 });
 
+ClassicEditor
+.create( document.querySelector( '.script_description' ), {
+    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+})
+.catch( error => {
+    console.error( error );
+});
+
 
 
 
