@@ -37,6 +37,7 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
                 <!-- <p>Hare Krishna</p> -->
                 <form action="javascript:void(0);" id="general_settings" method="post">
                     <input type="hidden" value="<?php echo $row['id']??''; ?>" name="hidden_id">
+                    <input type="hidden" value="save_general_setting" name="general_setting">
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="meta_title" class="col-form-label">Meta Title</label>

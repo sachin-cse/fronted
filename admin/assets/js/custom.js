@@ -255,6 +255,114 @@ $(document).ready(function(){
         }
     });
 
+    // add general settings
+    $.validator.addMethod('filesize', function (value, element, param) {
+        return this.optional(element) || (element.files[0].size <= param)
+    }, 'File size must be less than {0}');
+    
+    $.validator.addMethod('extention', function (value, element, param) {
+        var filename = element.files[0].name;
+        var lastdot = filename.lastIndexOf('.');
+        var ext = filename.substring(lastdot + 1);
+        if($.inArray(ext, ['jpg', 'png', 'jpeg']) != -1){
+            return true;
+        } else{
+            return false;
+        }
+    });
+
+    $.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+          var re = new RegExp(regexp);
+          return this.optional(element) || re.test(value);
+        }
+      );
+
+    $('#general_settings').validate({
+        // rules:{
+        //     meta_title:{
+        //         required:true,
+        //         regex:'^[a-zA-Z ]',
+        //     },
+        //     meta_description:{
+        //         required:true,
+        //         maxlength:255,
+        //     },
+        //     og_image:{
+        //         required:true,
+        //         extention:'jpeg,jpg,png',
+        //         filesize:200000,
+        //     },
+        //     robot_index:{
+        //         required:true,
+        //     },
+        //     robot_follow:{
+        //         required:true,
+        //     },
+        //     script_title:{
+        //         required:true,
+        //         regex:'^[a-zA-Z ]',
+        //     },
+        //     script_description:{
+        //         required:true,
+        //     }
+        // },
+        // messages:{
+        //     meta_title:{
+        //         required:"Please enter meta title",
+        //         regex:"Please enter meta title properly"
+        //     },
+        //     meta_description:{
+        //         required:"Please enter meta description",
+        //     },
+        //     og_image:{
+        //         required:"Please upload og image",
+        //         filesize:"maximum file size allowed 200kb",
+        //         extention:"Allowed image formats are PNG, JPEG,JPG",
+        //     },
+        //     robot_index:{
+        //         required:"Please select robot index",
+        //     },
+        //     robot_follow:{
+        //         required:"Please select robot follow"
+        //     },
+        //     script_title:{
+        //         required:"Please enter script title",
+        //         regex:"Please enter script title properly"
+        //     },
+        //     script_description:{
+        //         required:"Please enter script description"
+        //     }
+
+        // },
+        submitHandler: function(form){
+            // ('#addadminModel').modal('show');
+            var formData = new FormData(form);
+            $.ajax({
+                method:"POST",
+                url: base_url + "/fronted/admin/settings/save_settings.php",
+                dataType:"json",
+                contentType: false,
+                cache: false,
+                processData:false,
+                data:formData,
+                success: function(data){
+                    if(data.status == 201){
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                    // setTimeout(function(){ window.location.reload(); }, 2000);
+                },
+                error: function (error) {
+                    console.log(error.status + ':' + error.statusText,error.responseText);
+                }
+
+            })
+        }
+    });
+
     // change password
     $('#usrchangepassword').validate({
         rules:{

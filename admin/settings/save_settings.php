@@ -4,25 +4,104 @@ include(dirname(dirname(__FILE__)).'\Helper\Apphelper.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+    if($_POST['general_setting']??'' == 'save_general_setting'){
+        // validation message
+        $response['status'] = '';
+        $response['message'] = '';
+        // echo "Hare Krishna"; exit;
+        $meta_title = isset($_POST['meta_title']) ? $_POST['meta_title']:'';
+        $meta_description = isset($_POST['meta_description']) ? $_POST['meta_description']:'';
+        $og_image = isset($_FILES['og_image']['name']) ? $_FILES['og_image']['name'] :'';
+        $og_image_tmpName = isset($_FILES["og_image"]["tmp_name"]) ? $_FILES["og_image"]["tmp_name"] : '';
+        $meta_keywords = isset($_POST['meta_keywords'])?$_POST['meta_keywords']:'';
+        $robot_index = isset($_POST['robot_index'])?$_POST['robot_index']:'';
+        $robot_follow = isset($_POST['robot_follow'])?$_POST['robot_follow']:'';
+        $script_title = isset($_POST['script_title'])?$_POST['script_title']:'';
+        $script_description = isset($_POST['script_description'])?$_POST['script_description']:'';
+
+        if(empty($meta_title)){
+            $response['status'] = 500;
+            $response['message'] = 'Please enter meta title';
+        } else if(!preg_match("/^([a-zA-Z' ]+)$/",$meta_title)){
+            $response['status'] = 500;
+            $response['message'] = 'Please enter meta title properly';
+        }
+
+        if(empty($meta_description)){
+            $response['status'] = 500;
+            $response['message'] = 'Please enter meta description';
+        }
+
+        // image validation
+        $allowed_image_extension = ['jpg', 'png', 'jpeg'];
+        $file_extension = pathinfo($_FILES["og_image"]["name"], PATHINFO_EXTENSION);
+        if(empty($og_image)){
+            $response['status'] = 500;
+            $response['message'] = 'Please upload og image';
+        } else if(!in_array($file_extension, $allowed_image_extension)){
+            $response['status'] = 500;
+            $response['message'] = 'Upload valid images. Only JPG, PNG and JPEG are allowed.';
+        } else if(($_FILES["og_image"]["size"] > 200 * 1024)){
+            $response['status'] = 500;
+            $response['message'] = 'Image size exceeds 200kb';
+        }
+
+        if(empty($meta_keywords)){
+            $response['status'] = 500;
+            $response['message'] = 'Please enter meta keywords';
+        } else if(!preg_match("/^([a-zA-Z' ]+)$/",$meta_keywords)){
+            $response['status'] = 500;
+            $response['message'] = 'Please enter meta keywords properly';
+        }
+
+        if(empty($robot_index)){
+            $response['status'] = 500;
+            $response['message'] = 'Please select robot index';
+        }
+
+        if(empty($robot_follow)){
+            $response['status'] = 500;
+            $response['message'] = 'Please select robot follow';
+        }
+
+        if(empty($script_title)){
+            $response['status'] = 500;
+            $response['message'] = 'Please enter script title';
+        } else if(!preg_match("/^([a-zA-Z' ]+)$/",$script_title)){
+            $response['status'] = 500;
+            $response['message'] = 'Please enter script title properly';
+        }
+
+        if(empty($script_description)){
+            $response['status'] = 500;
+            $response['message'] = 'Please enter script description';
+        }
+
+        if(!empty($response)){
+            echo json_encode($response);
+        } else {
+            echo "Hare Krishna and Hare Rama"; exit;
+        }
+    } else {
     $hidden_id = isset($_POST['hidden_id']) ? $_POST['hidden_id'] : '';
     $existing_site_logo = isset($_POST['existing_site_logo']) ? $_POST['existing_site_logo'] : '';
     $existing_fav_icon = isset($_POST['existing_fav_icon']) ? $_POST['existing_fav_icon'] : '';
-    $site_title = $_POST['site_title'];
-    $site_description = $_POST['site_description'];
+    $site_title = $_POST['site_title']??'';
+    $site_description = $_POST['site_description']??'';
     $site_logo = isset($_FILES['site_logo']['name']) ? $_FILES['site_logo']['name'] :'';
     $site_logoTemp = isset($_FILES["site_logo"]["tmp_name"]) ? $_FILES["site_logo"]["tmp_name"] : '';
     $site_favicon = isset($_FILES['site_favicon']['name']) ? $_FILES['site_favicon']['name'] :'';
     $site_faviconTemp = isset($_FILES["site_favicon"]["tmp_name"]) ? $_FILES["site_favicon"]["tmp_name"] : '';
-    $footer_phone = $_POST['footer_phone'];
-    $footer_description = $_POST['footer_description'];
-    $footer_email = $_POST['footer_email'];
-    $footer_links = implode(',', $_POST['footer_links']);
-    $smtp_driver = $_POST['smtp_driver'];
-    $smtp_host = $_POST['smtp_host'];
-    $smtp_port = $_POST['smtp_port'];
-    $smtp_username = $_POST['smtp_username'];
-    $smtp_password = $_POST['smtp_password'];
-    $smtp_encryption = $_POST['smtp_encryption'];
+    $footer_phone = $_POST['footer_phone']??'';
+    $footer_description = $_POST['footer_description']??'';
+    $footer_email = $_POST['footer_email']??'';
+    $footer_links = implode(',', $_POST['footer_links']??[]);
+    $smtp_driver = $_POST['smtp_driver']??'';
+    $smtp_host = $_POST['smtp_host']??'';
+    $smtp_port = $_POST['smtp_port']??'';
+    $smtp_username = $_POST['smtp_username']??'';
+    $smtp_password = $_POST['smtp_password']??'';
+    $smtp_encryption = $_POST['smtp_encryption']??'';
 
     $createUserId = get_current_user_id();
     // echo $createUserId; exit;
@@ -95,5 +174,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   catch(\Exception $e){
     echo (json_encode(array('message' => $e->getMessage(), 'status' => 500)));
   }
-}
+    }
+    
+} 
+
+
+
 ?>

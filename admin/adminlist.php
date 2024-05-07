@@ -11,7 +11,7 @@ if(!isset($_SESSION['email'])){
 }
 
 // Number of records per page
-$recordsPerPage = 10;
+$recordsPerPage = 1;
 // current page number
 
 if(isset($_GET['page'])){
