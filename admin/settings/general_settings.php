@@ -16,9 +16,9 @@ if(!isset($_SESSION['email'])){
 include(dirname(dirname(__FILE__)).'\includes\header.php'); 
 include(dirname(dirname(__FILE__)).'\includes\navbar.php'); 
 
-// $sql = "SELECT * FROM `site_settings` WHERE `create_user` = ".$_SESSION['currentUser_id']."";
-// $result  = mysqli_query($conn, $sql);
-// $row = mysqli_fetch_assoc($result);
+$sql = "SELECT * FROM `general_settings` WHERE `create_user` = ".$_SESSION['currentUser_id']."";
+$result  = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -57,7 +57,7 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
                             ?>
                             <img src="<?php echo $site_logo??'' ?>" id="ogImage" height="50" width="50">
                             <input type="file" class="form-control" id="og_image" name="og_image" accept=".gif, .jpg, .png" onchange="previewImage('ogImage', this)">
-                            <!-- <input type="hidden" value="<?php echo $row['site_logo']; ?>" name="existing_site_logo" id="existing_site_logo"> -->
+                            <input type="hidden" value="<?php echo $row['og_image']; ?>" name="existing_og_image" id="existing_og_image">
                         </div>
 
                         <div class="form-group col-6">

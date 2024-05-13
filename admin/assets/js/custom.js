@@ -280,62 +280,70 @@ $(document).ready(function(){
       );
 
     $('#general_settings').validate({
-        // rules:{
-        //     meta_title:{
-        //         required:true,
-        //         regex:'^[a-zA-Z ]',
-        //     },
-        //     meta_description:{
-        //         required:true,
-        //         maxlength:255,
-        //     },
-        //     og_image:{
-        //         required:true,
-        //         extention:'jpeg,jpg,png',
-        //         filesize:200000,
-        //     },
-        //     robot_index:{
-        //         required:true,
-        //     },
-        //     robot_follow:{
-        //         required:true,
-        //     },
-        //     script_title:{
-        //         required:true,
-        //         regex:'^[a-zA-Z ]',
-        //     },
-        //     script_description:{
-        //         required:true,
-        //     }
-        // },
-        // messages:{
-        //     meta_title:{
-        //         required:"Please enter meta title",
-        //         regex:"Please enter meta title properly"
-        //     },
-        //     meta_description:{
-        //         required:"Please enter meta description",
-        //     },
-        //     og_image:{
-        //         required:"Please upload og image",
-        //         filesize:"maximum file size allowed 200kb",
-        //         extention:"Allowed image formats are PNG, JPEG,JPG",
-        //     },
-        //     robot_index:{
-        //         required:"Please select robot index",
-        //     },
-        //     robot_follow:{
-        //         required:"Please select robot follow"
-        //     },
-        //     script_title:{
-        //         required:"Please enter script title",
-        //         regex:"Please enter script title properly"
-        //     },
-        //     script_description:{
-        //         required:"Please enter script description"
-        //     }
+        rules:{
+            meta_title:{
+                required:true,
+                regex:'^[a-zA-Z ]',
+            },
+            meta_keywords:{
+                required:true,
+                regex:'^[a-zA-Z ]',
+            },
+            meta_description:{
+                required:true,
+                maxlength:255,
+            },
+            og_image:{
+                required:true,
+                extention:'jpeg,jpg,png',
+                filesize:200000,
+            },
+            robot_index:{
+                required:true,
+            },
+            robot_follow:{
+                required:true,
+            },
+            script_title:{
+                required:true,
+                regex:'^[a-zA-Z ]',
+            },
+            script_description:{
+                required:true,
+            }
+        },
+        messages:{
+            meta_title:{
+                required:"Please enter meta title",
+                regex:"Please enter meta title properly"
+            },
+            meta_description:{
+                required:"Please enter meta description",
+            },
+            og_image:{
+                required:"Please upload og image",
+                filesize:"maximum file size allowed 200kb",
+                extention:"Allowed image formats are PNG, JPEG,JPG",
+            },
+            meta_keywords:{
+                required:"Please enter meta keywords",
+                regex:"Please enter meta keywords properly",
+            },
+            robot_index:{
+                required:"Please select robot index",
+            },
+            robot_follow:{
+                required:"Please select robot follow"
+            },
+            script_title:{
+                required:"Please enter script title",
+                regex:"Please enter script title properly"
+            },
+            script_description:{
+                required:"Please enter script description"
+            }
 
-        // },
+        },
         submitHandler: function(form){
             // ('#addadminModel').modal('show');
             var formData = new FormData(form);
@@ -353,7 +361,7 @@ $(document).ready(function(){
                     } else {
                         toastr.error(data.message);
                     }
-                    // setTimeout(function(){ window.location.reload(); }, 2000);
+                    setTimeout(function(){ window.location.reload(); }, 2000);
                 },
                 error: function (error) {
                     console.log(error.status + ':' + error.statusText,error.responseText);
