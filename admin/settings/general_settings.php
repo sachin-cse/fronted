@@ -20,7 +20,10 @@ $sql = "SELECT * FROM `general_settings` WHERE `create_user` = ".$_SESSION['curr
 $result  = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
+$meta_robots = explode(',', $row['site_meta_robots']??[]);
+
 ?>
+
 
 <div class="container-fluid">
 
@@ -41,36 +44,36 @@ $row = mysqli_fetch_assoc($result);
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="meta_title" class="col-form-label">Meta Title</label>
-                            <input type="text" class="form-control" id="meta_title" name="meta_title" value="<?php echo $row['meta_title']??''; ?>"/>
+                            <input type="text" class="form-control" id="meta_title" name="meta_title" value="<?php echo $row['site_meta_title']??''; ?>"/>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="meta_description" class="col-form-label">Meta Description:</label>
                             <!-- <input type="email" class="form-control" id="email" name="email" /> -->
-                            <textarea name="meta_description" class="form-control editor" id="meta_description"><?php echo $row['meta_description']??''; ?></textarea>
+                            <textarea name="meta_description" class="form-control editor" id="meta_description"><?php echo $row['site_meta_description']??''; ?></textarea>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="og_image" class="col-form-label">Og Image</label>
                             <?php
-                            $site_logo = !empty($row['site_logo']??'') ? $base_url.'fronted/admin/settings/upload/site_logo/'.$row['site_logo']??''.'':$base_url.'/fronted/admin/upload/noimage.png';
+                            $og_image = !empty($row['og_image']??'') ? $base_url.'fronted/admin/settings/upload/og_image/'.$row['og_image']??''.'':$base_url.'/fronted/admin/upload/noimage.png';
                             ?>
-                            <img src="<?php echo $site_logo??'' ?>" id="ogImage" height="50" width="50">
+                            <img src="<?php echo $og_image??'' ?>" id="ogImage" height="50" width="50">
                             <input type="file" class="form-control" id="og_image" name="og_image" accept=".gif, .jpg, .png" onchange="previewImage('ogImage', this)">
-                            <input type="hidden" value="<?php echo $row['og_image']; ?>" name="existing_og_image" id="existing_og_image">
+                            <input type="hidden" value="<?php echo $row['og_image']??''; ?>" name="existing_og_image" id="existing_og_image">
                         </div>
 
                         <div class="form-group col-6">
                             <label for="meta_keywords" class="col-form-label">Site Meta keywords</label>
-                            <input type="text" class="form-control" id="meta_keywords" value="<?php echo $row['meta_keywords']??''; ?>" name="meta_keywords" placeholder="Site Meta Keywords">
+                            <input type="text" class="form-control" id="meta_keywords" value="<?php echo $row['site_meta_keywords']??''; ?>" name="meta_keywords" placeholder="Site Meta Keywords">
                         </div>
 
                         <div class="form-group col-6">
                             <label for="robot_index" class="col-form-label">Robot Index</label>
 
                             <select name="robot_index" id="robot_index">
-                                <option value="index" <?php if($row['index']??'' == "index") echo "selected"; ?> >default</option>
-                                <option value="noindex" <?php if($row['noindex']??'' == "noindex") echo "selected"; ?> >noindex</option>
+                                <option value="index" <?php if(($meta_robots[0]??'') == "index") echo "selected"; ?> >index</option>
+                                <option value="noindex" <?php if(($meta_robots[0]??'') == "noindex") echo "selected"; ?> >noindex</option>
                             </select> 
                         </div>
 
@@ -78,14 +81,14 @@ $row = mysqli_fetch_assoc($result);
                             <label for="robot_follow" class="col-form-label">Robot Follow</label>
 
                             <select name="robot_follow" id="robot_follow">
-                                <option value="follow" <?php if($row['follow']??'' == "follow") echo "selected"; ?> >follow</option>
-                                <option value="nofollow" <?php if($row['nofollow']??'' == "nofollow") echo "selected"; ?> >nofollow</option>
+                                <option value="follow" <?php if(($meta_robots[1]??'') == "follow") echo "selected"; ?> >follow</option>
+                                <option value="nofollow" <?php if(($meta_robots[1]??'') == "nofollow") echo "selected"; ?> >nofollow</option>
                             </select> 
                         </div>
 
                         <div class="form-group col-6">
                             <label for="script_title" class="col-form-label">Script Title</label>
-                            <input type="text" class="form-control" id="script_title" name="script_title" value="<?php echo $row['script_title']??''; ?>"/>
+                            <input type="text" class="form-control" id="script_title" name="script_title" value="<?php echo $row['script_name']??''; ?>"/>
                         </div>
 
                         <div class="form-group col-6">

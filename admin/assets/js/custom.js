@@ -260,7 +260,7 @@ $(document).ready(function(){
         return this.optional(element) || (element.files[0].size <= param)
     }, 'File size must be less than {0}');
     
-    $.validator.addMethod('extention', function (value, element, param) {
+    $.validator.addMethod('extension', function (value, element, param) {
         var filename = element.files[0].name;
         var lastdot = filename.lastIndexOf('.');
         var ext = filename.substring(lastdot + 1);
@@ -295,7 +295,7 @@ $(document).ready(function(){
             },
             og_image:{
                 required:true,
-                extention:'jpeg,jpg,png',
+                extension:'jpeg,jpg,png',
                 filesize:200000,
             },
             robot_index:{
@@ -323,7 +323,7 @@ $(document).ready(function(){
             og_image:{
                 required:"Please upload og image",
                 filesize:"maximum file size allowed 200kb",
-                extention:"Allowed image formats are PNG, JPEG,JPG",
+                extension:"Allowed image formats are PNG, JPEG,JPG",
             },
             meta_keywords:{
                 required:"Please enter meta keywords",
