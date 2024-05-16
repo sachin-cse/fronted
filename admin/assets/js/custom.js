@@ -261,14 +261,22 @@ $(document).ready(function(){
     }, 'File size must be less than {0}');
     
     $.validator.addMethod('extension', function (value, element, param) {
-        var filename = element.files[0].name;
-        var lastdot = filename.lastIndexOf('.');
-        var ext = filename.substring(lastdot + 1);
-        if($.inArray(ext, ['jpg', 'png', 'jpeg']) != -1){
-            return true;
-        } else{
-            return false;
+        var files = element.files;
+        console.log(files);
+        if(files && files.length > 0){
+            var filename = files[0].name;
+
+            if(filename && filename.length > 0){
+                var lastdot = filename.lastIndexOf('.');
+                var ext = filename.substring(lastdot + 1);
+                if($.inArray(ext, ['jpg', 'png', 'jpeg']) != -1){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
         }
+        return true;
     });
 
     $.validator.addMethod(
@@ -294,7 +302,9 @@ $(document).ready(function(){
                 maxlength:255,
             },
             og_image:{
-                required:true,
+                required:function(element){
+                    return $('#existing_og_image').val() !== ''?false:true;
+                },
                 extension:'jpeg,jpg,png',
                 filesize:200000,
             },
@@ -358,10 +368,10 @@ $(document).ready(function(){
                 success: function(data){
                     if(data.status == 201){
                         toastr.success(data.message);
+                        setTimeout(function(){ window.location.reload(); }, 2000);
                     } else {
                         toastr.error(data.message);
                     }
-                    setTimeout(function(){ window.location.reload(); }, 2000);
                 },
                 error: function (error) {
                     console.log(error.status + ':' + error.statusText,error.responseText);
@@ -697,6 +707,21 @@ ClassicEditor
 .catch( error => {
     console.error( error );
 });
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#og_image')
+                .attr('src', e.target.result)
+                .width(150)
+                .height(200);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
 
 

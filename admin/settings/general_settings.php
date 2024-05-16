@@ -59,7 +59,7 @@ $meta_robots = explode(',', $row['site_meta_robots']??[]);
                             $og_image = !empty($row['og_image']??'') ? $base_url.'fronted/admin/settings/upload/og_image/'.$row['og_image']??''.'':$base_url.'/fronted/admin/upload/noimage.png';
                             ?>
                             <img src="<?php echo $og_image??'' ?>" id="ogImage" height="50" width="50">
-                            <input type="file" class="form-control" id="og_image" name="og_image" accept=".gif, .jpg, .png" onchange="previewImage('ogImage', this)">
+                            <input type="file" class="form-control" id="og_image" value="" name="og_image" accept=".gif, .jpg, .png" onchange="previewImage('ogImage', this)">
                             <input type="hidden" value="<?php echo $row['og_image']??''; ?>" name="existing_og_image" id="existing_og_image">
                         </div>
 

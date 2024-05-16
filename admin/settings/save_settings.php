@@ -10,7 +10,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $response['message'] = '';
         // echo "Hare Krishna"; exit;
         $hidden_id = isset($_POST['hidden_id']) ? $_POST['hidden_id'] : '';
-        $existing_og_image = isset($_POST['og_image']) ? $_POST['og_image'] : '';
+        $existing_og_image = isset($_POST['existing_og_image']) ? $_POST['existing_og_image'] : '';
+
         $og_image = isset($_FILES['og_image']['name']) ? $_FILES['og_image']['name'] :'';
         $og_imageTemp = isset($_FILES["og_image"]["tmp_name"]) ? $_FILES["og_image"]["tmp_name"] : '';
         $footer_phone = $_POST['footer_phone']??'';
@@ -39,15 +40,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // image validation
         $allowed_image_extension = ['jpg', 'png', 'jpeg'];
         $file_extension = pathinfo($_FILES["og_image"]["name"], PATHINFO_EXTENSION);
-        if(empty($og_image)){
+
+        if(!empty($og_image)){
+            if(!in_array($file_extension, $allowed_image_extension)){
+                $response['status'] = 500;
+                $response['message'] = 'Upload valid images. Only JPG, PNG and JPEG are allowed.';
+            } 
+            else if(($_FILES["og_image"]["size"] > 200 * 1024)){
+                $response['status'] = 500;
+                $response['message'] = 'Image size exceeds 200kb';
+            }
+        }
+
+        if(empty($existing_og_image)){
             $response['status'] = 500;
-            $response['message'] = 'Please upload og image';
-        } else if(!in_array($file_extension, $allowed_image_extension)){
-            $response['status'] = 500;
-            $response['message'] = 'Upload valid images. Only JPG, PNG and JPEG are allowed.';
-        } else if(($_FILES["og_image"]["size"] > 200 * 1024)){
-            $response['status'] = 500;
-            $response['message'] = 'Image size exceeds 200kb';
+            $response['message'] = 'Please upload  og image';
         }
 
         if(empty($meta_keywords)){
