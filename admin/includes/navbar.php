@@ -43,16 +43,17 @@ $activePage = basename($_SERVER['PHP_SELF']);
 </div>
 
 <!-- Nav Item - Pages Collapse Menu -->
-<li class="nav-item <?php if($activePage == 'site_settings.php' || $activePage == 'general_settings.php'){echo 'activeShow';}?>">
+<li class="nav-item <?php if($activePage == 'site_settings.php' || $activePage == 'general_settings.php' || $activePage == 'social_settings.php'){echo 'activeShow';}?>">
   <a class="nav-link drop-dwon collapsed" href="javascritp:void(0);" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
     <i class="fas fa-fw fa-cog"></i>
     <span>Settings</span>
   </a>
-  <div id="collapseTwo" class="collapse <?php if($activePage == 'site_settings.php' || $activePage == 'general_settings.php'){echo 'show';}?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+  <div id="collapseTwo" class="collapse <?php if($activePage == 'site_settings.php' || $activePage == 'general_settings.php' || $activePage == 'social_settings.php'){echo 'show';}?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="py-2 collapse-inner rounded dropdown-menu" style="display: block;">
       <!-- <h6 class="collapse-header">Custom Components:</h6> -->
       <a class="collapse-item <?php if($activePage == 'site_settings.php'){echo 'active';}?>" href="/fronted/admin/settings/site_settings.php">Site Settings</a>
       <a class="collapse-item <?php if($activePage == 'general_settings.php'){echo 'active';}?>" href="/fronted/admin/settings/general_settings.php">General Settings</a>
+      <a class="collapse-item <?php if($activePage == 'social_settings.php'){echo 'active';}?>" href="/fronted/admin/settings/social_settings.php">Social Settings</a>
     </div>
   </div>
 </li>

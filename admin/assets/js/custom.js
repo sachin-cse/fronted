@@ -262,7 +262,6 @@ $(document).ready(function(){
     
     $.validator.addMethod('extension', function (value, element, param) {
         var files = element.files;
-        console.log(files);
         if(files && files.length > 0){
             var filename = files[0].name;
 
@@ -365,6 +364,45 @@ $(document).ready(function(){
                 cache: false,
                 processData:false,
                 data:formData,
+                success: function(data){
+                    if(data.status == 201){
+                        toastr.success(data.message);
+                        setTimeout(function(){ window.location.reload(); }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function (error) {
+                    console.log(error.status + ':' + error.statusText,error.responseText);
+                }
+
+            })
+        }
+    });
+
+    // save social settings
+    $('#social_settings').validate({
+        rules:{
+            'social_link_name[]':'required',
+            'social_link[]':'required',
+            'social_link_icon[]':'required',
+            'social_link_class[]':'required'
+        },
+        messages:{
+            'social_link_name[]':"Please enter your social link name",
+            'social_link[]':"Please enter your social link",
+
+            'social_link_icon[]':"Please enter social link icon class",
+
+            'social_link_class[]':"Please enter social link class",
+        },
+        submitHandler: function(form){
+            // ('#addadminModel').modal('show');
+            $.ajax({
+                method:"POST",
+                url: base_url + "/fronted/admin/settings/save_settings.php",
+                dataType:"json",
+                data:$('form').serialize(),
                 success: function(data){
                     if(data.status == 201){
                         toastr.success(data.message);
@@ -625,6 +663,24 @@ $(document).ready(function(){
     });
 
     $('#dynamic_field').on('click', '.remove_field', function(){
+        $(this).closest('tr').remove();
+    });
+
+    // social links
+    $('#add_social_item').on('click',function(){
+        $('#dynamic_social_field').append(`<tr id="row" class="dynamic_row">
+        <td><input type="text" name="social_link_name[]" id="social_link_name" class="form-control" placeholder="Social Link Name"></td>
+        <td><input type="text" name="social_link[]" id="social_link" class="form-control" placeholder="Social Link">
+        </td>
+        <td><input type="text" name="social_link_icon[]" id="social_link_icon" class="form-control" placeholder="Social Link Icon">
+        </td>
+        <td><input type="text" name="social_link_class[]" id="social_link_class" class="form-control" placeholder="Social Link Class">
+        </td>
+        <td><a href="javascript:void(0);" id="" class="form-control remove_social_field">Remove</a></td>
+        </tr>`);
+    });
+
+    $('#dynamic_social_field').on('click', '.remove_social_field', function(){
         $(this).closest('tr').remove();
     });
 

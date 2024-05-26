@@ -37,6 +37,7 @@ $row = mysqli_fetch_assoc($result);
                 <!-- <p>Hare Krishna</p> -->
                 <form action="javascript:void(0);" id="site_settings" method="post">
                     <input type="hidden" value="<?php echo $row['id']; ?>" name="hidden_id">
+                    <input type="hidden" value="save_site_settings" name="site_settings">
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="site_title" class="col-form-label">Site Title</label>
