@@ -692,6 +692,20 @@ $(document).ready(function(){
         $('.nav-item.activeShow').find('a:first').addClass('collapsed');
     }
 
+    // resources data
+    $(document).on('change', '#media_type', function(e){
+        e.preventDefault();
+        if($(this).val() == 'file'){
+            $('#show_media_file').addClass('d-none');
+            $('#show_file_link').removeClass('d-none');
+            $('#show_media_file').find('input').val('');
+        }else{
+            $('#show_media_file').removeClass('d-none');
+            $('#show_file_link').addClass('d-none');
+            $('#show_file_link').find('input').val('');
+        }
+    });
+
 
 
 });

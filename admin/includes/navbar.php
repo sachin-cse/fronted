@@ -58,6 +58,17 @@ $activePage = basename($_SERVER['PHP_SELF']);
   </div>
 </li>
 
+<!-- Heading -->
+<div class="sidebar-heading">
+  Resources
+</div>
+
+<li class="nav-item <?php if($activePage == 'index.php'){echo 'active';}?>">
+  <a class="nav-link" href="/fronted/admin/resources/index.php">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>Media</span></a>
+</li>
+
 
 
 <?php
