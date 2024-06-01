@@ -37,7 +37,7 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
         
             <div class="card-body">
                 <!-- <p>Hare Krishna</p> -->
-                <form action="javascript:void(0);" id="general_settings" method="post">
+                <form action="javascript:void(0);" id="resource" method="post">
                     <input type="hidden" value="<?php echo $row['id']??''; ?>" name="hidden_id">
                     <input type="hidden" value="save_resource_data" name="resource_data">
                     <div class="row">
@@ -59,7 +59,10 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 
                         <div class="form-group col-6 d-none" id="show_media_file">
                             <label for="media" class="col-form-label">Media</label>
-                            <img src="" id="media" height="50" width="50">
+                            <?php
+                            $og_image = !empty($row['og_image']??'') ? $base_url.'fronted/admin/settings/upload/og_image/'.$row['og_image']??''.'':$base_url.'/fronted/admin/upload/noimage.png';
+                            ?>
+                            <img src="<?= $og_image??'' ?>" id="media" height="50" width="50">
                             <input type="file" class="form-control" id="media_file" value="" name="media_file" onchange="previewImage('media', this)">
                             <input type="hidden" value="" name="existing_media_file" id="existing_media_file">
                         </div>

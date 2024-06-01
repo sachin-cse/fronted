@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     if(window.location.href !== base_url + '/fronted/admin/index.php'){
         startSessionTimeout();
     }
@@ -466,6 +465,39 @@ $(document).ready(function(){
         }
     });
 
+    // save resource data
+    $('#resource').validate({
+        rules:{
+            media_type:{
+                required:true,
+            },
+            file_link:{
+                required:true,
+            },
+            media_file:{
+                required:true,
+                extension:'mp4,wav,ogg'
+            },
+            description:{
+                required:true,
+            }
+        },
+        messages:{
+            media_type:{
+                required:"Please select your media type",
+            },
+            file_link:{
+                required:"Please enter your file link",
+            },
+            media_file:{
+                required:"Please upload your video",
+            },
+            description:{
+                required:"Please enter your description"
+            }
+        }
+    });
+
     // admin edit profile
     $(document).on('click', '.edit-profile', function(){
 
@@ -745,9 +777,21 @@ function IsEmail(email) {
 // preview image
 function previewImage(id, input){
     if (input.files && input.files[0]) {
+
+        var getFilename = input.files[0].name
+        var getFileextension = getFilename.split('.').pop();
+
         var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#' + id).attr('src', e.target.result);
+        var extension = ['mp4', 'og', 'wav'];
+        if(extension.indexOf(getFileextension) != -1){
+            var name = 'play-icon.png';
+            reader.onload = function (e) {
+                console.log($('#' + id).attr('src', base_url + 'fronted/admin/upload/' + name));
+            }
+        }else{
+            reader.onload = function (e) {
+                $('#' + id).attr('src', e.target.result);
+            }
         }
         reader.readAsDataURL(input.files[0]);
     }
