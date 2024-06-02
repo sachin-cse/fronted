@@ -466,6 +466,23 @@ $(document).ready(function(){
     });
 
     // save resource data
+    $.validator.addMethod('extension', function (value, element, param) {
+        var files = element.files;
+        if(files && files.length > 0){
+            var filename = files[0].name;
+
+            if(filename && filename.length > 0){
+                var lastdot = filename.lastIndexOf('.');
+                var ext = filename.substring(lastdot + 1);
+                if($.inArray(ext, ['mp4', 'ogg', 'wav']) != -1){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    });
     $('#resource').validate({
         rules:{
             media_type:{
@@ -491,10 +508,36 @@ $(document).ready(function(){
             },
             media_file:{
                 required:"Please upload your video",
+                extension:"Please upload only mp4, wav, ogg"
             },
             description:{
                 required:"Please enter your description"
             }
+        },
+        submitHandler: function(form){
+            // ('#addadminModel').modal('show');
+            var formData = new FormData(form);
+            $.ajax({
+                method:"POST",
+                url: base_url + "/fronted/admin/resources/save_resource_data.php",
+                dataType:"json",
+                contentType: false,
+                cache: false,
+                processData:false,
+                data:formData,
+                success: function(data){
+                    if(data.status == 201){
+                        toastr.success(data.message);
+                        setTimeout(function(){ window.location.reload(); }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function (error) {
+                    console.log(error.status + ':' + error.statusText,error.responseText);
+                }
+
+            })
         }
     });
 

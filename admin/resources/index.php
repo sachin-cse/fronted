@@ -16,9 +16,9 @@ if(!isset($_SESSION['email'])){
 include(dirname(dirname(__FILE__)).'\includes\header.php'); 
 include(dirname(dirname(__FILE__)).'\includes\navbar.php'); 
 
-// $sql = "SELECT * FROM `general_settings` WHERE `create_user` = ".$_SESSION['currentUser_id']."";
-// $result  = mysqli_query($conn, $sql);
-// $row = mysqli_fetch_assoc($result);
+$sql = "SELECT * FROM `resources` WHERE `created_by` = ".$_SESSION['currentUser_id']."";
+$result  = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
 
 
 ?>
