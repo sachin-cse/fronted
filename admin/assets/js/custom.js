@@ -492,7 +492,9 @@ $(document).ready(function(){
                 required:true,
             },
             media_file:{
-                required:true,
+                required:function(element){
+                    return $('#existing_media_file').val() !== ''?false:true;
+                },
                 extension:'mp4,wav,ogg'
             },
             description:{

@@ -13,7 +13,8 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
         $media_type = isset($_POST['media_type'])?$_POST['media_type']:'';
         $description = isset($_POST['description'])?$_POST['description']:'';
         $file_link = isset($_POST['file_link'])?$_POST['file_link']:'';
-        $media_file = isset($_FILES['media_file']['name']) ? $_FILES['media_file']['name'] :'';
+        $media_file = !empty($_FILES['media_file']['name']) ? $_FILES['media_file']['name'] :$_POST['existing_media_file'];
+        // echo $media_file; exit;
         $file = !empty($file_link) ? $file_link:$media_file;
         $media_fileTemp = isset($_FILES["media_file"]["tmp_name"]) ? $_FILES["media_file"]["tmp_name"] : '';
         $hidden_id = isset($_POST['hidden_id'])? $_POST['hidden_id']:'';
