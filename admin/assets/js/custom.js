@@ -761,6 +761,24 @@ $(document).ready(function(){
         $(this).closest('tr').remove();
     });
 
+    // generate slug
+    $(document).on('keyup', '.slug', function(){
+        var pageVal = $(this).val();
+        var slugAttr = $(this).attr('data-slug');
+
+        $('#'+slugAttr).val('');
+
+        $.ajax({
+            method:'GET',
+            url:base_url + '/fronted/admin/Helper/Apphelper.php/',
+            data:{val:pageVal},
+            dataType: 'json',
+            success:function(data){
+                $('#'+slugAttr).val(data.slug);
+            }
+        });
+    });
+
     // drop down icon change
     // Check if the collapse is in the 'show' state
     if ($('#collapseTwo').hasClass('show')) {

@@ -39,6 +39,21 @@ $activePage = basename($_SERVER['PHP_SELF']);
 
 <!-- Heading -->
 <div class="sidebar-heading">
+  CMS
+</div>
+
+<!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item <?php if($activePage == 'index.php'|| $activePage == 'add_edit.php'){echo 'active';}?>">
+  <a class="nav-link" href="/fronted/admin/pages/index.php">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>Pages</span></a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
   Settings
 </div>
 
