@@ -779,6 +779,71 @@ $(document).ready(function(){
         });
     });
 
+    // save pages 
+    $('#add_edit_page').validate({
+        rules:{
+            page_name:{
+                required:true
+            },
+            page_slug: {
+                required:true
+            },
+            page_title:{
+                required:true
+            },
+            page_status:{
+                required:true
+            },
+            page_description:{
+                required:true
+            }
+
+        },
+        messages:{
+            page_name:{
+                required:"Please enter page name",
+            },
+            page_slug:{
+                required:"Please enter page slug",
+            },
+            page_title:{
+                required:"Please enter page title",
+            },
+            page_status:{
+                required:"Please choose page status",
+            },
+            page_description:{
+                required:"Please enter page description",
+            }
+        },
+        submitHandler: function(form){
+            // ('#addadminModel').modal('show');
+            var formData = new FormData(form);
+            $.ajax({
+                method:"POST",
+                url: base_url + "/fronted/admin/pages/save_pages.php",
+                dataType:"json",
+                contentType: false,
+                cache: false,
+                processData:false,
+                data:formData,
+                success: function(data){
+                    if(data.status == 200){
+                        toastr.success(data.message);
+                        setTimeout(function(){ window.location.reload(true) }, 2000);
+                    } 
+                    else {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function (error) {
+                    console.log(error.status + ':' + error.statusText,error.responseText);
+                }
+
+            })
+        }
+    });
+
     // drop down icon change
     // Check if the collapse is in the 'show' state
     if ($('#collapseTwo').hasClass('show')) {

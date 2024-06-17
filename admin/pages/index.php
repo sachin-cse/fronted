@@ -26,11 +26,11 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 
 // $startFrom = ($currentPage-1)*$recordsPerPage;
 // $query = "SELECT COUNT(`id`) FROM `adminsignin` ";
-// $query1 = "SELECT * FROM `adminsignin` LIMIT $startFrom, $recordsPerPage";
+$query1 = "SELECT * FROM `pages`";
 
 
 // $result = mysqli_query($conn, $query);
-// $result1 = mysqli_query($conn, $query1);
+$result1 = mysqli_query($conn, $query1);
 // $count = mysqli_num_rows($result);
 
 ?>
@@ -67,6 +67,20 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
                                 <th>Created at</th>
                                 <th>Actions</th>
                             </tr>
+                            <?php
+                            $i=1; 
+                            while($row = mysqli_fetch_assoc($result1)){
+                                ?>
+                                    <tr>
+                                        <td><?= $i++; ?></td>
+                                        <td><?= $row['page_name']; ?></td>
+                                        <td><?= $row['page_status']; ?></td>
+                                        <td><?= date('d F Y H:i:s a', strtotime($row['created_at'])); ?></td>
+                                        <td>Actions</td>
+                                    </tr>
+                                <?php
+                            }
+                            ?>
                         </thead>
                     </table>
 

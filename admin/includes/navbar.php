@@ -8,6 +8,8 @@ if(isset($_SESSION['currentUser_id']))
 }
 
 $activePage = basename($_SERVER['PHP_SELF']);
+$folders = explode('/', $_SERVER['REQUEST_URI']);
+// print_r($folders);
 ?>
 <!-- Sidebar -->
    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -43,7 +45,7 @@ $activePage = basename($_SERVER['PHP_SELF']);
 </div>
 
 <!-- Nav Item - Pages Collapse Menu -->
-<li class="nav-item <?php if($activePage == 'index.php'|| $activePage == 'add_edit.php'){echo 'active';}?>">
+<li class="nav-item <?php if(($activePage == 'index.php'|| $activePage == 'add_edit.php') && in_array('pages', $folders)){echo 'active';}?>">
   <a class="nav-link" href="/fronted/admin/pages/index.php">
     <i class="fas fa-fw fa-tachometer-alt"></i>
     <span>Pages</span></a>
@@ -78,7 +80,7 @@ $activePage = basename($_SERVER['PHP_SELF']);
   Resources
 </div>
 
-<li class="nav-item <?php if($activePage == 'index.php'){echo 'active';}?>">
+<li class="nav-item <?php if($activePage == 'index.php' && in_array('resources', $folders)){echo 'active';}?>">
   <a class="nav-link" href="/fronted/admin/resources/index.php">
     <i class="fas fa-fw fa-tachometer-alt"></i>
     <span>Media</span></a>

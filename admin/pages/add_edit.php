@@ -16,10 +16,9 @@ if(!isset($_SESSION['email'])){
 include(dirname(dirname(__FILE__)).'\includes\header.php'); 
 include(dirname(dirname(__FILE__)).'\includes\navbar.php'); 
 
-// $sql = "SELECT * FROM `resources` WHERE `created_by` = ".$_SESSION['currentUser_id']."";
+// $sql = "SELECT * FROM `pages` WHERE `page_id` = '1'";
 // $result  = mysqli_query($conn, $sql);
 // $row = mysqli_fetch_assoc($result);
-
 
 ?>
 
@@ -28,7 +27,7 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0"><?php ($row['id']??'') > 0 ? 'Add Page':'Edit Page' ?></h1>
+        <h1 class="h3 mb-0"><?php ($row['page_id']??'') > 0 ? 'Add Page':'Edit Page' ?></h1>
     </div>
 
     <!-- Content Row -->
@@ -38,7 +37,8 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
             <div class="card-body">
                 <!-- <p>Hare Krishna</p> -->
                 <form action="javascript:void(0);" id="add_edit_page" method="post">
-                    <input type="hidden" value="<?php echo $row['id']??''; ?>" name="hidden_id">
+                    <input type="hidden" value="<?php echo $row['page_id']??0; ?>" name="hidden_id">
+                    <input type="hidden" name="mode" value="save_pages">
                     <!-- <input type="hidden" value="save_resource_data" name="resource_data"> -->
                     <div class="row">
 
@@ -46,17 +46,17 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 
                         <div class="form-group col-6">
                             <label for="page_name">Page Name<span class="text-danger">*</span></label>
-                            <input type="text" value="" class="form-control slug" id="page_name" name="page_name" data-slug="page_slug"/>
+                            <input type="text" value="<?= $row['page_name']; ?>" class="form-control slug" id="page_name" name="page_name" data-slug="page_slug"/>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="page_slug">Page Slug<span class="text-danger">*</span></label>
-                            <input type="text" value="" class="form-control" id="page_slug" name="page_slug"/>
+                            <input type="text" value="<?= $row['page_slug']; ?>" class="form-control" id="page_slug" name="page_slug"/>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="page_title">Page Title<span class="text-danger">*</span></label>
-                            <input type="text" value="" class="form-control" id="page_title" name="page_title"/>
+                            <input type="text" value="<?= $row['page_title']; ?>" class="form-control" id="page_title" name="page_title"/>
                         </div>
 
                         <div class="form-group col-6">
