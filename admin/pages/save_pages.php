@@ -71,7 +71,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 throw new Exception(mysqli_error($conn));
             }else{
                 $uploadFolder1 = "./upload/".$og_feature_image;
-            
                 move_uploaded_file($og_imageTemp, $uploadFolder1);
                 echo json_encode(['status'=>200, 'message'=>'Page save successfully']);
             }

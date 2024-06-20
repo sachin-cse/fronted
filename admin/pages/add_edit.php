@@ -16,10 +16,20 @@ if(!isset($_SESSION['email'])){
 include(dirname(dirname(__FILE__)).'\includes\header.php'); 
 include(dirname(dirname(__FILE__)).'\includes\navbar.php'); 
 
-// $sql = "SELECT * FROM `pages` WHERE `page_id` = '1'";
-// $result  = mysqli_query($conn, $sql);
-// $row = mysqli_fetch_assoc($result);
+$url  = $_SERVER["PHP_SELF"];
+$path = explode("/", $url); 
+$last = end($path);
 
+if(is_numeric($last)){
+    $sql = "SELECT * 
+    FROM `pages` p
+    JOIN `page_seo` ps ON ps.page_id = p.page_id
+    WHERE p.page_id = $last;
+    ";
+    $result  = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $meta_robots = explode(',', $row['meta_robots']??[]);
+}
 ?>
 
 
@@ -46,17 +56,17 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 
                         <div class="form-group col-6">
                             <label for="page_name">Page Name<span class="text-danger">*</span></label>
-                            <input type="text" value="<?= $row['page_name']; ?>" class="form-control slug" id="page_name" name="page_name" data-slug="page_slug"/>
+                            <input type="text" value="<?= $row['page_name']??''; ?>" class="form-control slug" id="page_name" name="page_name" data-slug="page_slug"/>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="page_slug">Page Slug<span class="text-danger">*</span></label>
-                            <input type="text" value="<?= $row['page_slug']; ?>" class="form-control" id="page_slug" name="page_slug"/>
+                            <input type="text" value="<?= $row['page_slug']??''; ?>" class="form-control" id="page_slug" name="page_slug"/>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="page_title">Page Title<span class="text-danger">*</span></label>
-                            <input type="text" value="<?= $row['page_title']; ?>" class="form-control" id="page_title" name="page_title"/>
+                            <input type="text" value="<?= $row['page_title']??''; ?>" class="form-control" id="page_title" name="page_title"/>
                         </div>
 
                         <div class="form-group col-6">
@@ -64,19 +74,22 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 
                             <select name="page_status" id="page_status" class="form-select">
                                 <option value="" selected disabled>select page status</option>
-                                <option value="active" >Active</option>
-                                <option value="inactive" >InActive</option>
+                                <option value="active" <?php if(($row['page_status']??'') == 'active'){echo 'selected';}  ?>>Active</option>
+                                <option value="inactive" <?php if(($row['page_status']??'') == 'inactive') {echo 'selected';} ?>>InActive</option>
                             </select> 
                         </div>
 
                         <div class="form-group col-12">
                             <label for="page_title">Page Description<span class="text-danger">*</span></label>
-                            <textarea name="page_description" class="form-control editor" id="page_description"></textarea>
+                            <textarea name="page_description" class="form-control editor" id="page_description"><?= $row['page_description']??'' ?></textarea>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="page_feature_image" class="col-form-label">Page Feature Image</label>
-                            <img src="" id="feature_image" height="50" width="50">
+                            <?php 
+                            $feature_image = !empty($row['page_feature_image']) ? $base_url.'fronted/admin/pages/upload/'.$row['page_feature_image'].'':$base_url.'/fronted/admin/upload/noimage.png';
+                            ?>
+                            <img src="<?= $feature_image; ?>" id="feature_image" height="50" width="50">
                             <input type="file" value="" class="form-control" id="page_feature_image" name="page_feature_image" onchange="previewImage('feature_image', this)"/>
                         </div>
 
@@ -88,20 +101,20 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 
                         <div class="form-group col-6">
                             <label for="meta_title">Meta Title</label>
-                            <input type="text" value="" class="form-control" id="meta_title" name="meta_title"/>
+                            <input type="text" value="<?= $row['meta_title']??''; ?>" class="form-control" id="meta_title" name="meta_title"/>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="meta_keyword">Meta Keyword</label>
-                            <input type="text" value="" class="form-control" id="meta_keyword" name="meta_keyword"/>
+                            <input type="text" value="<?= $row['meta_keyword']??''; ?>" class="form-control" id="meta_keyword" name="meta_keyword"/>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="robot_index" class="col-form-label">Robot Index</label>
 
                             <select name="robot_index" id="robot_index">
-                                <option value="index">index</option>
-                                <option value="noindex">noindex</option>
+                                <option value="index" <?php if(($meta_robots[0]??'')=='index'){echo 'selected';} ?>>index</option>
+                                <option value="noindex" <?php if(($meta_robots[0]??'')=='noindex'){echo 'selected';} ?>>noindex</option>
                             </select> 
                         </div>
 
@@ -109,19 +122,22 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
                             <label for="robot_follow" class="col-form-label">Robot Follow</label>
 
                             <select name="robot_follow" id="robot_follow">
-                                <option value="follow">follow</option>
-                                <option value="nofollow">nofollow</option>
+                                <option value="follow" <?php if(($meta_robots[1]??'')=='follow'){echo 'selected';} ?>>follow</option>
+                                <option value="nofollow" <?php if(($meta_robots[1]??'')=='nofollow'){echo 'selected';} ?>>nofollow</option>
                             </select> 
                         </div>
 
                         <div class="form-group col-12">
                             <label for="meta_description">Meta Description</label>
-                            <textarea name="meta_description" class="form-control editor" id="meta_description"></textarea>
+                            <textarea name="meta_description" class="form-control editor" id="meta_description"><?=$row['meta_description'];?></textarea>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="og_feature_image" class="col-form-label">Og Feature Image</label>
-                            <img src="" id="og_image" height="50" width="50">
+                            <?php 
+                            $og_image = !empty($row['og_feature_image']) ? $base_url.'fronted/admin/pages/upload/'.$row['og_feature_image'].'':$base_url.'/fronted/admin/upload/noimage.png';
+                            ?>
+                            <img src="<?= $og_image; ?>" id="og_image" height="50" width="50">
                             <input type="file" value="" class="form-control" id="og_feature_image" name="og_feature_image" onchange="previewImage('og_image', this)"/>
                         </div>
 

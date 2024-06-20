@@ -26,13 +26,12 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 
 // $startFrom = ($currentPage-1)*$recordsPerPage;
 // $query = "SELECT COUNT(`id`) FROM `adminsignin` ";
-$query1 = "SELECT * FROM `pages`";
+$query = "SELECT * FROM `pages`";
 
 
 // $result = mysqli_query($conn, $query);
-$result1 = mysqli_query($conn, $query1);
+$result = mysqli_query($conn, $query);
 // $count = mysqli_num_rows($result);
-
 ?>
 
 
@@ -69,14 +68,16 @@ $result1 = mysqli_query($conn, $query1);
                             </tr>
                             <?php
                             $i=1; 
-                            while($row = mysqli_fetch_assoc($result1)){
+                            while($row = mysqli_fetch_assoc($result)){
                                 ?>
                                     <tr>
                                         <td><?= $i++; ?></td>
                                         <td><?= $row['page_name']; ?></td>
                                         <td><?= $row['page_status']; ?></td>
                                         <td><?= date('d F Y H:i:s a', strtotime($row['created_at'])); ?></td>
-                                        <td>Actions</td>
+                                        <td><a href="<?= $base_url.'/fronted/admin/pages/add_edit.php/'.$row['page_id'];?>">Edit</a> | 
+                                            <a href="<?= $base_url.'/fronted/admin/pages/add_edit.php/'.$row['page_id'];?>">Delete</a>
+                                        </td>
                                     </tr>
                                 <?php
                             }
