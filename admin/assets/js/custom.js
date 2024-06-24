@@ -844,6 +844,75 @@ $(document).ready(function(){
         }
     });
 
+    // check all box for multiple delete
+    $(document).on('click', '.check', function(){
+        if($('.check').is(':checked')){
+            $('.checkAll').prop('checked', true);
+        }else{
+            $('.checkAll').prop('checked', false);
+        }
+    });
+
+    // delete single page
+    $(document).on('click', '.delete_page', function(){
+        var Url = $(this).attr('data-url');
+        var dataId = $(this).attr('data-id');
+
+        var valid = confirm('Are you sure you want to delete?');
+
+        if(valid){
+            $.ajax({
+                url: Url,
+                type:'GET',
+                dataType: 'json',
+                data:{id: dataId},
+                success:function(response){
+                    // console.log(response.flag);
+                    if((response.status == 200) && response.flag !== 'error'){
+                        toastr.success(response.message);
+                        setTimeout(function(){
+                            window.location.reload(true);
+                        },2000);
+                    }else{
+                        toastr.error(response.message);
+                    }
+                }
+            })
+        }
+    });
+
+    // multiple delete
+    $(document).on('click', '.delete_all', function(){
+        var Url = $(this).attr('data-url');
+        var dataVal = $(this).attr('data-val');
+        // alert(dataVal);
+        var searchIDs = $("#find-table input:checkbox:checked").map(function(){
+            return $(this).val();
+          }).toArray().slice(1);
+
+        if(searchIDs.length === 0){
+            toastr.info('Please select at least one row');
+        }else{
+            $.ajax({
+                url: Url,
+                type:'GET',
+                dataType: 'json',
+                data:{type:dataVal, ids:searchIDs},
+                success:function(response){
+                    // console.log(response.flag);
+                    if((response.status == 200) && response.flag !== 'error'){
+                        toastr.success(response.message);
+                        setTimeout(function(){
+                            window.location.reload(true);
+                        },2000);
+                    }else{
+                        toastr.error(response.message);
+                    }
+                }
+            })
+        }
+    })
+
     // drop down icon change
     // Check if the collapse is in the 'show' state
     if ($('#collapseTwo').hasClass('show')) {
@@ -931,7 +1000,7 @@ ClassicEditor
     toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
 })
 .catch( error => {
-    console.error( error );
+    console.error(error);
 });
 
 ClassicEditor
@@ -939,7 +1008,7 @@ ClassicEditor
     toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
 })
 .catch( error => {
-    console.error( error );
+    console.error(error);
 });
 
 ClassicEditor
@@ -947,7 +1016,7 @@ ClassicEditor
     toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
 })
 .catch( error => {
-    console.error( error );
+    console.error(error);
 });
 
 function readURL(input) {

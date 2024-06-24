@@ -129,7 +129,7 @@ if(is_numeric($last)){
 
                         <div class="form-group col-12">
                             <label for="meta_description">Meta Description</label>
-                            <textarea name="meta_description" class="form-control editor" id="meta_description"><?=$row['meta_description'];?></textarea>
+                            <textarea name="meta_description" class="form-control editor" id="meta_description"><?=$row['meta_description']??'';?></textarea>
                         </div>
 
                         <div class="form-group col-6">

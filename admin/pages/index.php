@@ -52,14 +52,16 @@ $result = mysqli_query($conn, $query);
                 <h6 class="m-0 font-weight-bold text-primary">CMS Pages</h6>
 
                 <a href="/fronted/admin/pages/add_edit.php" class="btn btn-primary float-right">Add Page</a>
+                <a href="javascript:void(0);" class="btn btn-primary float-right me-1 delete_all" data-url="<?=$base_url.'/fronted/admin/pages/delete_page.php'?>" data-val = "multiple_delete">Delete All</a>
                 <!-- <input type="search" placeholder="search here..." class="live-search" name="livesearch" id="search"> -->
             </div>
             <div class="card-body">
 
                 <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="find-table" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th><input type="checkbox" class="check" name="checked"></th>
                                 <th>S No.</th>
                                 <th>Page Name</th>
                                 <th>Status</th>
@@ -71,12 +73,13 @@ $result = mysqli_query($conn, $query);
                             while($row = mysqli_fetch_assoc($result)){
                                 ?>
                                     <tr>
+                                        <td><input type="checkbox" class="checkAll" name="checked_id[]" value="<?=$row['page_id'];?>"></td>
                                         <td><?= $i++; ?></td>
                                         <td><?= $row['page_name']; ?></td>
                                         <td><?= $row['page_status']; ?></td>
                                         <td><?= date('d F Y H:i:s a', strtotime($row['created_at'])); ?></td>
                                         <td><a href="<?= $base_url.'/fronted/admin/pages/add_edit.php/'.$row['page_id'];?>">Edit</a> | 
-                                            <a href="<?= $base_url.'/fronted/admin/pages/add_edit.php/'.$row['page_id'];?>">Delete</a>
+                                            <a href="javascript:void(0);" data-url="<?=$base_url.'/fronted/admin/pages/delete_page.php'?>" data-id="<?=$row['page_id'];?>" class="delete_page">Delete</a>
                                         </td>
                                     </tr>
                                 <?php
