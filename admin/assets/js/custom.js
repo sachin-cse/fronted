@@ -885,19 +885,36 @@ $(document).ready(function(){
     $(document).on('click', '.delete_all', function(){
         var Url = $(this).attr('data-url');
         var dataVal = $(this).attr('data-val');
-        // alert(dataVal);
-        var searchIDs = $("#find-table input:checkbox:checked").map(function(){
-            return $(this).val();
-          }).toArray().slice(1);
+        var inputs = $("#find-table input[type='checkbox']");
+        console.log(inputs);
+        var vals = [];
 
-        if(searchIDs.length === 0){
+        for(var i=0; i<inputs.length; i++){
+            var allInputs = $("#find-table").find(":input");
+            var type = allInputs.attr('type');
+            if(type == 'checkbox' && inputs[i].checked){
+                vals.push(inputs[i].value);
+            }
+        }
+
+        if(jQuery.inArray("on", vals) != -1){
+            vals.shift();
+        }
+
+        // console.log(vals);
+        // alert(dataVal);
+        // var searchIDs = $("#find-table input:checkbox:checked").map(function(){
+        //     return $(this).val();
+        //   }).toArray().slice(1);
+        // console.log(vals);
+        if(vals.length === 0){
             toastr.info('Please select at least one row');
         }else{
             $.ajax({
                 url: Url,
                 type:'GET',
                 dataType: 'json',
-                data:{type:dataVal, ids:searchIDs},
+                data:{type:dataVal, ids:vals},
                 success:function(response){
                     // console.log(response.flag);
                     if((response.status == 200) && response.flag !== 'error'){
