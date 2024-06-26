@@ -82,6 +82,7 @@ if(is_numeric($last)){
                         <div class="form-group col-12">
                             <label for="page_title">Page Description<span class="text-danger">*</span></label>
                             <textarea name="page_description" class="form-control editor" id="page_description"><?= $row['page_description']??'' ?></textarea>
+                            <!-- <p class="float-right"><span>0</span>/10</p> -->
                         </div>
 
                         <div class="form-group col-6">

@@ -930,6 +930,21 @@ $(document).ready(function(){
         }
     })
 
+    // word count in text editor
+    $(document).on('input','.wordCount', function(){
+        var words = $(this).val().split(' ');
+        var wordLength = words.length;
+        // console.log(wordLength);
+        $('.float-right span').text(wordLength);
+
+        if(wordLength >= 10){
+            var truncatedWords = words.slice(0, 10).join(' ');
+            $(this).val(truncatedWords);
+            $('.wordCount').prop('disabled', true);
+            // $('p').text('').css('color', 'red');
+        }
+    });
+
     // drop down icon change
     // Check if the collapse is in the 'show' state
     if ($('#collapseTwo').hasClass('show')) {
@@ -951,8 +966,6 @@ $(document).ready(function(){
             $('#show_file_link').find('input').val('');
         }
     });
-
-
 
 });
 
