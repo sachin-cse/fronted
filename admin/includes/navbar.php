@@ -51,6 +51,20 @@ $folders = explode('/', $_SERVER['REQUEST_URI']);
     <span>Pages</span></a>
 </li>
 
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+  Banner
+</div>
+
+<!-- Home Page Banner -->
+<li class="nav-item <?php if(($activePage == 'index.php'|| $activePage == 'add_edit.php') && in_array('banner', $folders)){echo 'active';}?>">
+  <a class="nav-link" href="/fronted/admin/banner/index.php">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>Home Page Banner</span></a>
+</li>
+
 <!-- Divider -->
 <hr class="sidebar-divider">
 
