@@ -12,10 +12,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $response['message'] = '';
         // echo "Hare Krishna"; exit;
         $hidden_id = isset($_POST['hidden_id']) ? $_POST['hidden_id'] : '';
-        $existing_og_image = isset($_POST['existing_og_image']) ? $_POST['existing_og_image'] : '';
-
         $og_image = isset($_FILES['og_image']['name']) ? $_FILES['og_image']['name'] :'';
         $og_imageTemp = isset($_FILES["og_image"]["tmp_name"]) ? $_FILES["og_image"]["tmp_name"] : '';
+
+        $existing_og_image = !empty($_POST['existing_og_image']) ? $_POST['existing_og_image'] : $og_image;
+
         $footer_phone = $_POST['footer_phone']??'';
         $meta_title = $_POST['meta_title']??'';
         $meta_description = $_POST['meta_description']??'';
@@ -54,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         if(empty($existing_og_image)){
             $response['status'] = 500;
-            $response['message'] = 'Please upload  og image';
+            $response['message'] = 'Please upload og image';
         }
 
         if(empty($meta_keywords)){
@@ -110,9 +111,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
                 $ogImageupdateorNot =  $og_image ? $og_image:$existing_og_image;
                 if(!empty($hidden_id)){
-                    $sql = "UPDATE `general_settings` SET `site_meta_title` = '$meta_title', `site_meta_description` = '$meta_description', `site_meta_keywords` = '$meta_keywords', `site_meta_robots` = '$metarobots', `script_name` = '$script_title', `script_description` = '$script_description', `og_image` = '$ogImageupdateorNot', `create_user` = '$createUserId' WHERE `id` = '$hidden_id'";
+                    $sql = "UPDATE `general_settings` SET `site_meta_title` = '$meta_title', `site_meta_description` = '$meta_description', `site_meta_keywords` = '$meta_keywords', `site_meta_robots` = '$metarobots', `site_script_title` = '$script_title', `site_script_description` = '$script_description', `site_og_image` = '$ogImageupdateorNot', `create_user` = '$createUserId' WHERE `id` = '$hidden_id'";
                 } else {
-                    $sql = "INSERT INTO general_settings (site_meta_title, site_meta_description, site_meta_keywords, site_meta_robots, script_name, script_description, og_image, create_user) VALUES ('$meta_title', '$meta_description', '$meta_keywords', '$metarobots', '$script_title', '$script_description', '$ogImageupdateorNot', '$createUserId')";
+                    $sql = "INSERT INTO general_settings (site_meta_title, site_meta_description, site_meta_keywords, site_meta_robots, site_script_title, site_script_description, site_og_image, create_user) VALUES ('$meta_title', '$meta_description', '$meta_keywords', '$metarobots', '$script_title', '$script_description', '$ogImageupdateorNot', '$createUserId')";
                 }
 
                 $runQuery = mysqli_query($conn, $sql);
@@ -231,9 +232,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $siteLogoupdateorNot =  $site_logo ? $site_logo:$existing_site_logo;
             $siteFaviconupdateorNot = $site_favicon ? $site_favicon:$existing_fav_icon;
             if(!empty($hidden_id)){
-                $sql = "UPDATE `site_settings` SET `site_tittle` = '$site_title', `site_description` = '$site_description', `site_logo` = '$siteLogoupdateorNot', `site_favicon` = '$siteFaviconupdateorNot', `smtp_driver` = '$smtp_driver', `smtp_host` = '$smtp_host', `smtp_port` = '$smtp_port', `smtp_username` = '$smtp_username', `smtp_password` = '$smtp_password', `site_footer_links` = '$footer_links', `site_footer_email` = '$footer_email', `site_footer_description` = '$footer_description', `site_footer_phone_number` = '$footer_phone', `create_user` = '$createUserId' WHERE `id` = '$hidden_id'";
+                $sql = "UPDATE `site_settings` SET `site_tittle` = '$site_title', `site_description` = '$site_description', `site_logo` = '$siteLogoupdateorNot', `site_favicon` = '$siteFaviconupdateorNot', `site_smtp_driver` = '$smtp_driver', `site_smtp_host` = '$smtp_host', `site_smtp_port` = '$smtp_port', `site_smtp_username` = '$smtp_username', `site_smtp_password` = '$smtp_password',`site_smtp_encryption`='$smtp_encryption', `site_footer_links` = '$footer_links', `site_footer_email` = '$footer_email', `site_footer_description` = '$footer_description', `site_footer_phone_number` = '$footer_phone', `create_user` = '$createUserId' WHERE `id` = '$hidden_id'";
             } else {
-                $sql = "INSERT INTO site_settings (site_tittle, site_description, site_logo, site_favicon, smtp_driver, smtp_host, smtp_port, smtp_username, smtp_encryption, smtp_password, site_footer_links, site_footer_email, site_footer_description, site_footer_phone_number, create_user) VALUES ('$site_title', '$site_description', '$site_logo', '$site_favicon', '$smtp_driver', '$smtp_host', '$smtp_port', '$smtp_username', '$smtp_encryption', '$smtp_password', '$footer_links', '$footer_email', ' $footer_description', '$footer_phone', '$createUserId')";
+                $sql = "INSERT INTO site_settings (site_tittle, site_description, site_logo, site_favicon, site_smtp_driver, site_smtp_host, site_smtp_port, site_smtp_username, site_smtp_encryption, site_smtp_password, site_footer_links, site_footer_email, site_footer_description, site_footer_phone_number, create_user) VALUES ('$site_title', '$site_description', '$site_logo', '$site_favicon', '$smtp_driver', '$smtp_host', '$smtp_port', '$smtp_username', '$smtp_encryption', '$smtp_password', '$footer_links', '$footer_email', ' $footer_description', '$footer_phone', '$createUserId')";
             }
 
             $runQuery = mysqli_query($conn, $sql);

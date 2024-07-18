@@ -44,6 +44,17 @@ $result = mysqli_query($conn, $query);
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">CMS Pages</h6>
 
+                <form class="d-sm-inline-block form-inline mr-auto mw-100 navbar-search" action="<?= $base_url.'fronted/admin/Helper/Apphelper.php/' ?>" id="navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small search_page" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
                 <a href="/fronted/admin/pages/add_edit.php" class="btn btn-primary float-right">Add Page</a>
                 <a href="javascript:void(0);" class="btn btn-primary float-right me-1 delete_all" data-url="<?=$base_url.'/fronted/admin/pages/delete_page.php'?>" data-val = "multiple_delete">Delete All</a>
                 <!-- <input type="search" placeholder="search here..." class="live-search" name="livesearch" id="search"> -->
@@ -61,12 +72,14 @@ $result = mysqli_query($conn, $query);
                                 <th>Created at</th>
                                 <th>Actions</th>
                             </tr>
+                        </thead>
                             <?php
                             $i=1; 
                             if(mysqli_num_rows($result)){
                                 $i=($currentPage-1)*$recordsPerPage + 1;
                                 while($row = mysqli_fetch_assoc($result)){
                                     ?>
+                                    <tbody id="searchData">
                                         <tr>
                                             <td><input type="checkbox" class="checkAll" name="checked_id[]" value="<?=$row['page_id'];?>"></td>
                                             <td><?= $i++; ?></td>
@@ -87,7 +100,7 @@ $result = mysqli_query($conn, $query);
                                 <?php
                             }
                             ?>
-                        </thead>
+                        </tbody>
                     </table>
                     <?php
                     $sql = "SELECT COUNT('*') AS `total` FROM `pages`";

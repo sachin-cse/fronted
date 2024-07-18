@@ -20,7 +20,7 @@ $sql = "SELECT * FROM `general_settings` WHERE `create_user` = ".$_SESSION['curr
 $result  = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
-$meta_robots = explode(',', $row['site_meta_robots']??[]);
+$meta_robots = explode(',', $row['site_meta_robots']??'');
 
 ?>
 
@@ -43,33 +43,33 @@ $meta_robots = explode(',', $row['site_meta_robots']??[]);
                     <input type="hidden" value="save_general_setting" name="general_setting">
                     <div class="row">
                         <div class="form-group col-6">
-                            <label for="meta_title" class="col-form-label">Meta Title</label>
+                            <label for="meta_title" class="col-form-label">Meta Title<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="meta_title" name="meta_title" value="<?php echo $row['site_meta_title']??''; ?>"/>
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="meta_description" class="col-form-label">Meta Description:</label>
+                            <label for="meta_description" class="col-form-label">Meta Description:<span class="text-danger">*</span></label>
                             <!-- <input type="email" class="form-control" id="email" name="email" /> -->
                             <textarea name="meta_description" class="form-control editor" id="meta_description"><?php echo $row['site_meta_description']??''; ?></textarea>
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="og_image" class="col-form-label">Og Image</label>
+                            <label for="og_image" class="col-form-label">Og Image<span class="text-danger">*</span></label>
                             <?php
-                            $og_image = !empty($row['og_image']??'') ? $base_url.'fronted/admin/settings/upload/og_image/'.$row['og_image']??''.'':$base_url.'/fronted/admin/upload/noimage.png';
+                            $og_image = !empty($row['site_og_image']??'') ? $base_url.'fronted/admin/settings/upload/og_image/'.$row['site_og_image']??''.'':$base_url.'/fronted/admin/upload/noimage.png';
                             ?>
                             <img src="<?php echo $og_image??'' ?>" id="ogImage" height="50" width="50">
                             <input type="file" class="form-control" id="og_image" value="" name="og_image" accept=".gif, .jpg, .png" onchange="previewImage('ogImage', this)">
-                            <input type="hidden" value="<?php echo $row['og_image']??''; ?>" name="existing_og_image" id="existing_og_image">
+                            <input type="hidden" value="<?php echo $row['site_og_image']??''; ?>" name="existing_og_image" id="existing_og_image">
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="meta_keywords" class="col-form-label">Site Meta keywords</label>
+                            <label for="meta_keywords" class="col-form-label">Site Meta keywords<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="meta_keywords" value="<?php echo $row['site_meta_keywords']??''; ?>" name="meta_keywords" placeholder="Site Meta Keywords">
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="robot_index" class="col-form-label">Robot Index</label>
+                            <label for="robot_index" class="col-form-label">Robot Index<span class="text-danger">*</span></label>
 
                             <select name="robot_index" id="robot_index">
                                 <option value="index" <?php if(($meta_robots[0]??'') == "index") echo "selected"; ?> >index</option>
@@ -78,7 +78,7 @@ $meta_robots = explode(',', $row['site_meta_robots']??[]);
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="robot_follow" class="col-form-label">Robot Follow</label>
+                            <label for="robot_follow" class="col-form-label">Robot Follow<span class="text-danger">*</span></label>
 
                             <select name="robot_follow" id="robot_follow">
                                 <option value="follow" <?php if(($meta_robots[1]??'') == "follow") echo "selected"; ?> >follow</option>
@@ -87,14 +87,14 @@ $meta_robots = explode(',', $row['site_meta_robots']??[]);
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="script_title" class="col-form-label">Script Title</label>
-                            <input type="text" class="form-control" id="script_title" name="script_title" value="<?php echo $row['script_name']??''; ?>"/>
+                            <label for="script_title" class="col-form-label">Script Title<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="script_title" name="script_title" value="<?php echo $row['site_script_title']??''; ?>"/>
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="script_description" class="col-form-label">Script Description:</label>
+                            <label for="script_description" class="col-form-label">Script Description:<span class="text-danger">*</span></label>
                             <!-- <input type="email" class="form-control" id="email" name="email" /> -->
-                            <textarea name="script_description" class="form-control script_description" id="script_description"><?php echo $row['script_description']??''; ?></textarea>
+                            <textarea name="script_description" class="form-control script_description" id="script_description"><?php echo $row['site_script_description']??''; ?></textarea>
                         </div>
 
                         <div class="modal-footer">

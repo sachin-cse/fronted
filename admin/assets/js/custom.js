@@ -241,10 +241,11 @@ $(document).ready(function(){
                 success: function(data){
                     if(data.status == 201){
                         toastr.success(data.message);
+                        setTimeout(function(){ window.location.reload(); }, 2000);
                     } else {
                         toastr.error(data.message);
                     }
-                    setTimeout(function(){ window.location.reload(); }, 2000);
+                    
                 },
                 error: function (error) {
                     console.log(error.status + ':' + error.statusText,error.responseText);
@@ -466,7 +467,7 @@ $(document).ready(function(){
     });
 
     // save resource data
-    $.validator.addMethod('extension', function (value, element, param) {
+    $.validator.addMethod('extensions', function (value, element, param) {
         var files = element.files;
         if(files && files.length > 0){
             var filename = files[0].name;
@@ -495,7 +496,7 @@ $(document).ready(function(){
                 required:function(element){
                     return $('#existing_media_file').val() !== ''?false:true;
                 },
-                extension:'mp4,wav,ogg'
+                extensions:'mp4,wav,ogg'
             },
             description:{
                 required:true,
@@ -510,7 +511,7 @@ $(document).ready(function(){
             },
             media_file:{
                 required:"Please upload your video",
-                extension:"Please upload only mp4, wav, ogg"
+                extensions:"Please upload only mp4, wav, ogg"
             },
             description:{
                 required:"Please enter your description"
@@ -775,6 +776,22 @@ $(document).ready(function(){
             dataType: 'json',
             success:function(data){
                 $('#'+slugAttr).val(data.slug);
+            }
+        });
+    });
+
+    // search page
+    $(document).on('input', '.search_page', function(){
+        var searchVal = $(this).val();
+        var formUrl = $('#navbar-search').attr('action');
+        // console.log(formUrl);
+        $.ajax({
+            method:'GET',
+            url:formUrl,
+            data:{searchVal:searchVal},
+            success:function(data){
+                $('#searchData').html(data);
+                console.log(data);
             }
         });
     });

@@ -36,18 +36,18 @@ $row = mysqli_fetch_assoc($result);
             <div class="card-body">
                 <!-- <p>Hare Krishna</p> -->
                 <form action="javascript:void(0);" id="site_settings" method="post">
-                    <input type="hidden" value="<?php echo $row['id']; ?>" name="hidden_id">
+                    <input type="hidden" value="<?php echo $row['id']??''; ?>" name="hidden_id">
                     <input type="hidden" value="save_site_settings" name="site_settings">
                     <div class="row">
                         <div class="form-group col-6">
-                            <label for="site_title" class="col-form-label">Site Title</label>
-                            <input type="text" class="form-control" id="site_title" name="site_title" value="<?php echo $row['site_tittle']; ?>"/>
+                            <label for="site_title" class="col-form-label">Site Title<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="site_title" name="site_title" value="<?php echo $row['site_tittle']??''; ?>"/>
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="site_description" class="col-form-label">Site Description:</label>
+                            <label for="site_description" class="col-form-label">Site Description:<span class="text-danger">*</span></label>
                             <!-- <input type="email" class="form-control" id="email" name="email" /> -->
-                            <textarea name="site_description" class="form-control editor" id="site_description"><?php echo $row['site_description']; ?></textarea>
+                            <textarea name="site_description" class="form-control editor" id="site_description"><?php echo $row['site_description']??''; ?></textarea>
                         </div>
 
                         <div class="form-group col-6">
@@ -69,30 +69,30 @@ $row = mysqli_fetch_assoc($result);
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="footer_title" class="col-form-label">Site Footer Phone Number</label>
-                            <input type="text" class="form-control" id="footer_phone" value="<?php echo $row['site_footer_phone_number']; ?>" name="footer_phone" placeholder="Site Footer Phone Number">
+                            <label for="footer_title" class="col-form-label">Site Footer Phone Number<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="footer_phone" value="<?php echo $row['site_footer_phone_number']??''; ?>" name="footer_phone" placeholder="Site Footer Phone Number">
                         </div>
 
                         <div class="form-group col-6">
                             <label for="footer_description" class="col-form-label">Site Footer Description</label>
-                            <textarea name="footer_description" class="form-control footer-description" id="footer_description"><?= $row['site_footer_description'];?></textarea>
+                            <textarea name="footer_description" class="form-control footer-description" id="footer_description"><?= $row['site_footer_description']??'';?></textarea>
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="footer_email" class="col-form-label">Site Footer Email</label>
-                            <input name="footer_email" class="form-control" id="footer_email" Value="<?= $row['site_footer_email'];?>">
+                            <label for="footer_email" class="col-form-label">Site Footer Email<span class="text-danger">*</span></label>
+                            <input name="footer_email" class="form-control" id="footer_email" Value="<?= $row['site_footer_email']??'';?>">
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="footer_email" class="col-form-label">Site Footer Links</label>
+                            <label for="footer_email" class="col-form-label">Site Footer Links<span class="text-danger">*</span></label>
                             <table class="table table-bordered" id="dynamic_field">
                                 <?php
                                 $count = 1;
-                                $footer_links = explode(',', $row['site_footer_links']);
+                                $footer_links = explode(',', $row['site_footer_links']??'');
                                 foreach($footer_links as $key=>$footer_link){
                                     ?>
                                         <tr>
-                                        <td><input type="text" name="footer_links[]" id="footer_links" value="<?php echo $footer_link; ?>" class="form-control" placeholder="Footer Links">
+                                        <td><input type="text" name="footer_links[]" id="footer_links" value="<?php echo $footer_link??''; ?>" class="form-control" placeholder="Footer Links">
                                         </td>
                                         <?php 
                                         if($count == 1){
@@ -116,36 +116,36 @@ $row = mysqli_fetch_assoc($result);
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="smtp_driver" class="col-form-label">SMTP Driver</label>
-                            <input type="text" value="<?php echo $row['smtp_driver']; ?>" class="form-control" id="smtp_driver" value="SMTP" name="smtp_driver" placeholder="SMTP Driver" />
+                            <label for="smtp_driver" class="col-form-label">SMTP Driver<span class="text-danger">*</span></label>
+                            <input type="text" value="<?php echo $row['site_smtp_driver']??''; ?>" class="form-control" id="smtp_driver" value="SMTP" name="smtp_driver" placeholder="SMTP Driver" />
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="smtp_host" class="col-form-label">SMTP Host</label>
-                            <input type="text" class="form-control" value="<?php echo $row['smtp_host']; ?>" id="smtp_host" name="smtp_host" placeholder="SMTP Host" />
+                            <label for="smtp_host" class="col-form-label">SMTP Host<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="<?php echo $row['site_smtp_host']??''; ?>" id="smtp_host" name="smtp_host" placeholder="SMTP Host" />
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="smtp_port" class="col-form-label">SMTP Port</label>
-                            <input type="text" class="form-control" value="<?php echo $row['smtp_port']; ?>" id="smtp_port" name="smtp_port" placeholder="SMTP Port" />
+                            <label for="smtp_port" class="col-form-label">SMTP Port<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="<?php echo $row['site_smtp_port']??''; ?>" id="smtp_port" name="smtp_port" placeholder="SMTP Port" />
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="smtp_username" class="col-form-label">SMTP Username</label>
-                            <input type="text" class="form-control" value="<?php echo $row['smtp_username']; ?>" id="smtp_username" name="smtp_username" placeholder="SMTP Username" />
+                            <label for="smtp_username" class="col-form-label">SMTP Username<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="<?php echo $row['site_smtp_username']??''; ?>" id="smtp_username" name="smtp_username" placeholder="SMTP Username" />
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="smtp_password" class="col-form-label">SMTP Password</label>
-                            <input type="password" class="form-control" value="<?php echo $row['smtp_password']; ?>" id="smtp_password" name="smtp_password" placeholder="SMTP Password" />
+                            <label for="smtp_password" class="col-form-label">SMTP Password<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" value="<?php echo $row['site_smtp_password']??''; ?>" id="smtp_password" name="smtp_password" placeholder="SMTP Password" />
                         </div>
 
                         <div class="form-group col-6">
                             <label for="smtp_encryption" class="col-form-label">SMTP Encryption</label>
 
                             <select name="smtp_encryption" id="smtp_encryption">
-                                <option value="tls" <?php if($row['smtp_encryption'] == "tls") echo "selected"; ?> >TLS</option>
-                                <option value="ssl" <?php if($row['smtp_encryption'] == "ssl") echo "selected"; ?> >SSL</option>
+                                <option value="tls" <?php if(($row['site_smtp_encryption']??'') == "tls") echo "selected"; ?> >TLS</option>
+                                <option value="ssl" <?php if(($row['site_smtp_encryption']??'') == "ssl") echo "selected"; ?> >SSL</option>
                             </select> 
                         </div>
 

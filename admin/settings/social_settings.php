@@ -45,34 +45,50 @@ $row = mysqli_fetch_assoc($result);
                             <table class="table table-bordered" id="dynamic_social_field">
                                 <?php
                                 $count = 1;
-                                $social_links = json_decode($row['social_links'], true);
+                                $social_links = json_decode($row['social_links']??'', true);
                                 // print_r($social_links[0]['social_link_name']);
-                                foreach($social_links as $key=>$value){
-                                    ?>
-                                        <tr>
-                                        <td><input type="text" name="social_link_name[]" id="social_link_name" value="<?php echo $social_links[$key]['social_link_name']; ?>" class="form-control" placeholder="Social Link Name">
-                                        </td>
-                                        <td><input type="text" name="social_link[]" id="social_link" value="<?php echo $social_links[$key]['social_link']; ?>" class="form-control" placeholder="Social Link">
-                                        </td>
-                                        <td><input type="text" name="social_link_icon[]" id="social_link_icon" value="<?php echo $social_links[$key]['social_link_icon']; ?>" class="form-control" placeholder="Social Link Icon">
-                                        </td>
-                                        <td><input type="text" name="social_link_class[]" id="social_link_class" value="<?php echo $social_links[$key]['social_link_class']; ?>" class="form-control" placeholder="Social Link Class">
-                                        </td>
-                                        <?php 
-                                        if($count == 1){
-                                            ?>
-                                                <td><a href="javascript:void(0);" id="add_social_item">Add</a></td>
-                                            <?php
-                                        } else{
-                                            ?>
-                                                <td>
-                                                    <a href="javascript:void(0);" class="form-control remove_social_field">Remove</a>
-                                                </td>
-                                            <?php
-                                        }
-                                        $count++;
+                                if(!empty($social_links)){
+                                    foreach($social_links as $key=>$value){
                                         ?>
-                                        </tr>
+                                            <tr>
+                                            <td><input type="text" name="social_link_name[]" id="social_link_name" value="<?php echo $social_links[$key]['social_link_name']??''; ?>" class="form-control" placeholder="Social Link Name">
+                                            </td>
+                                            <td><input type="text" name="social_link[]" id="social_link" value="<?php echo $social_links[$key]['social_link']??''; ?>" class="form-control" placeholder="Social Link">
+                                            </td>
+                                            <td><input type="text" name="social_link_icon[]" id="social_link_icon" value="<?php echo $social_links[$key]['social_link_icon']??''; ?>" class="form-control" placeholder="Social Link Icon">
+                                            </td>
+                                            <td><input type="text" name="social_link_class[]" id="social_link_class" value="<?php echo $social_links[$key]['social_link_class']??''; ?>" class="form-control" placeholder="Social Link Class">
+                                            </td>
+                                            <?php 
+                                            if($count == 1){
+                                                ?>
+                                                    <td><a href="javascript:void(0);" id="add_social_item">Add</a></td>
+                                                <?php
+                                            } else{
+                                                ?>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="form-control remove_social_field">Remove</a>
+                                                    </td>
+                                                <?php
+                                            }
+                                            $count++;
+                                            ?>
+                                            </tr>
+                                        <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <tr>
+                                        <td><input type="text" name="social_link_name[]*" id="social_link_name" class="form-control" placeholder="Social Link Name">
+                                        </td>
+                                        <td><input type="text" name="social_link[]*" id="social_link" class="form-control" placeholder="Social Link">
+                                        </td>
+                                        <td><input type="text" name="social_link_icon[]*" id="social_link_icon"  class="form-control" placeholder="Social Link Icon">
+                                        </td>
+                                        <td><input type="text" name="social_link_class[]*" id="social_link_class" class="form-control" placeholder="Social Link Class">
+                                        </td>
+                                        <td><a href="javascript:void(0);" id="add_social_item">Add</a></td>
+                                    </tr>
                                     <?php
                                 }
                                 ?>
