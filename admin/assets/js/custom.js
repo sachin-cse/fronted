@@ -937,7 +937,7 @@ $(document).ready(function(){
                     if((response.status == 200) && response.flag !== 'error'){
                         toastr.success(response.message);
                         setTimeout(function(){
-                            window.location.reload(true);
+                            window.location.href = base_url+'/fronted/admin/pages/index.php';
                         },2000);
                     }else{
                         toastr.error(response.message);

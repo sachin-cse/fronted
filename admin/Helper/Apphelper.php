@@ -54,5 +54,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['searchVal'])){
 
     echo $output;
 }
+
 ?>
 

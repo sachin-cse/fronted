@@ -44,7 +44,10 @@ CREATE TABLE IF NOT EXISTS `resources`(
 -- admin table
 CREATE TABLE IF NOT EXISTS `adminsignin`(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    profile_image VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT ON UPDATE CURRENT_TIMESTAMP
@@ -117,6 +120,34 @@ CREATE TABLE IF NOT EXISTS `site_settings`(
 );
 
 -- settings part query end---
+
+-- pages query
+CREATE TABLE IF NOT EXISTS `pages`(
+    `page_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `page_name` VARCHAR(255) NOT NULL,
+    `page_slug` VARCHAR(255) NOT NULL,
+    `page_title` VARCHAR(255) NOT NULL,
+    `page_status` VARCHAR(20) NOT NULL,
+    `page_description` VARCHAR(255) NOT NULL,
+    `page_feature_image` VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+-- pages seo query
+CREATE TABLE IF NOT EXISTS `page_seo`(
+    `seo_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `page_id` INT(11) NOT NULL,
+    `meta_title` VARCHAR(255) NOT NULL,
+    `meta_keyword` VARCHAR(255) NOT NULL,
+    `meta_description` VARCHAR(20) NOT NULL,
+    `meta_robots` VARCHAR(255) NOT NULL,
+    `og_feature_image` VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+-- relation between page and page seo table
+ALTER TABLE `page_seo`
+ADD FOREIGN KEY (`page_id`) REFERENCES pages(`page_id`);
 
 
 

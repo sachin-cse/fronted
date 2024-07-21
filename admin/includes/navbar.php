@@ -7,6 +7,7 @@ if(isset($_SESSION['currentUser_id']))
   $currentRole = $_SESSION['userRole'];
 }
 
+
 $activePage = basename($_SERVER['PHP_SELF']);
 $folders = explode('/', $_SERVER['REQUEST_URI']);
 // print_r($folders);
@@ -232,7 +233,7 @@ if($currentRole != 'subadmin'){
                   
                ADMIN
                 </span>
-                <img src="/fronted/admin/upload/<?php echo $currentProfile; ?>" height="50" width="50" >
+                <img src="/fronted/admin/upload/<?=$currentProfile;?>" height="50" width="50" >
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

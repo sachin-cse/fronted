@@ -1,5 +1,4 @@
 <?php
-// session_start();
 
 // echo dirname( __FILE__ ); exit;
 // echo $_SERVER['DOCUMENT_ROOT'].'/fronted/database/connection.php'; exit;

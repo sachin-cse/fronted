@@ -21,6 +21,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         if(mysqli_num_rows($result) > 0){
             $_SESSION['email'] = $email;
+            
             $_SESSION['currentUser_id'] = $row['id'];
             $_SESSION['profile_pic'] = $row['profile_image'];
             $_SESSION['loginTime'] = $current_time;
