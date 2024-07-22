@@ -11,7 +11,8 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
         $response['message'] = '';
 
         $media_type = isset($_POST['media_type'])?$_POST['media_type']:'';
-        $description = isset($_POST['description'])?$_POST['description']:'';
+        $description = isset($_POST['description'])?mysqli_real_escape_string($conn,$_POST['description']):'';
+        // echo $description;die;
         $file_link = isset($_POST['file_link'])?$_POST['file_link']:'';
         $media_file = !empty($_FILES['media_file']['name']) ? $_FILES['media_file']['name'] :$_POST['existing_media_file'];
         // echo $media_file; exit;

@@ -19,7 +19,7 @@ include(dirname(dirname(__FILE__)).'\includes\navbar.php');
 $sql = "SELECT * FROM `resources` WHERE `created_by` = ".$_SESSION['currentUser_id']."";
 $result  = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
-
+// print_r($row);
 
 ?>
 
@@ -47,17 +47,17 @@ $row = mysqli_fetch_assoc($result);
 
                             <select name="media_type" id="media_type" class="form-select">
                                 <option value="" selected disabled>select media type</option>
-                                <option value="file" <?php if($row['media_type'] == 'file')echo 'selected';?> >file</option>
-                                <option value="video" <?php if($row['media_type'] == 'video')echo 'selected';?> >video</option>
+                                <option value="file" <?php if(($row['media_type']??'') == 'file')echo 'selected';?> >file</option>
+                                <option value="video" <?php if(($row['media_type']??'') == 'video')echo 'selected';?> >video</option>
                             </select> 
                         </div>
 
-                        <div class="form-group col-6 <?php echo ($row['media_type'] == 'file') ? '':'d-none' ?>" id="show_file_link">
+                        <div class="form-group col-6 <?= ($row['media_type'] == 'file') ? '':'d-none' ?>" id="show_file_link">
                             <label for="file_link" class="col-form-label">File Link</label>
-                            <input type="text" value="<?= $row['file_link'];?>" class="form-control" id="file_link" name="file_link" value=""/>
+                            <input type="text" value="<?= $row['file_link']??'';?>" class="form-control" id="file_link" name="file_link" value=""/>
                         </div>
 
-                        <div class="form-group col-6 <?php ($row['media_type'] == 'video') ? '':'d-none' ?>" id="show_media_file">
+                        <div class="form-group col-6 <?= ($row['media_type'] == 'video') ? '':'d-none' ?>" id="show_media_file">
                             <label for="media" class="col-form-label">Media</label>
                             <?php
                             $getExtension = explode('.', $row['file_link']??'');
@@ -65,12 +65,12 @@ $row = mysqli_fetch_assoc($result);
                             ?>
                             <img src="<?= $media_file??'' ?>" id="media" height="50" width="50">
                             <input type="file" class="form-control" id="media_file" value="" name="media_file" onchange="previewImage('media', this)">
-                            <input type="hidden" value="<?=$row['file_link']; ?>" name="existing_media_file" id="existing_media_file">
+                            <input type="hidden" value="<?=$row['file_link']??''; ?>" name="existing_media_file" id="existing_media_file">
                         </div>
 
                         <div class="form-group col-12">
                             <label for="meta_description" class="col-form-label">Description:</label>
-                            <textarea name="description" class="form-control editor" id="description"><?=$row['description']; ?></textarea>
+                            <textarea name="description" class="form-control editor" id="description"><?=$row['description']??''; ?></textarea>
                         </div>
 
                         <div class="modal-footer">

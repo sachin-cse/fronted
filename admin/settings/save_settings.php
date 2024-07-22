@@ -19,11 +19,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $footer_phone = $_POST['footer_phone']??'';
         $meta_title = $_POST['meta_title']??'';
-        $meta_description = $_POST['meta_description']??'';
+        $meta_description = mysqli_real_escape_string($conn,$_POST['meta_description']??'');
         $meta_keywords = $_POST['meta_keywords'];
         $metarobots = $_POST['robot_index'].','.$_POST['robot_follow'];
         $script_title = $_POST['script_title']??'';
-        $script_description = $_POST['script_description']??'';
+        $script_description = mysqli_real_escape_string($conn,$_POST['script_description']??'');
 
         if(empty($meta_title)){
             $response['status'] = 500;
@@ -169,13 +169,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $existing_site_logo = isset($_POST['existing_site_logo']) ? $_POST['existing_site_logo'] : '';
         $existing_fav_icon = isset($_POST['existing_fav_icon']) ? $_POST['existing_fav_icon'] : '';
         $site_title = $_POST['site_title']??'';
-        $site_description = $_POST['site_description']??'';
+        $site_description = mysqli_real_escape_string($conn,$_POST['site_description']??'');
         $site_logo = isset($_FILES['site_logo']['name']) ? $_FILES['site_logo']['name'] :'';
         $site_logoTemp = isset($_FILES["site_logo"]["tmp_name"]) ? $_FILES["site_logo"]["tmp_name"] : '';
         $site_favicon = isset($_FILES['site_favicon']['name']) ? $_FILES['site_favicon']['name'] :'';
         $site_faviconTemp = isset($_FILES["site_favicon"]["tmp_name"]) ? $_FILES["site_favicon"]["tmp_name"] : '';
         $footer_phone = $_POST['footer_phone']??'';
-        $footer_description = $_POST['footer_description']??'';
+        $footer_description = mysqli_real_escape_string($conn,$_POST['footer_description']??'');
         $footer_email = $_POST['footer_email']??'';
         $footer_links = implode(',', $_POST['footer_links']??[]);
         $smtp_driver = $_POST['smtp_driver']??'';

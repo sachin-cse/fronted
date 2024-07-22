@@ -149,5 +149,16 @@ CREATE TABLE IF NOT EXISTS `page_seo`(
 ALTER TABLE `page_seo`
 ADD FOREIGN KEY (`page_id`) REFERENCES pages(`page_id`);
 
+-- resources table
+CREATE TABLE IF NOT EXISTS `resources`(
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `media_type` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `file_link` VARCHAR(255) NOT NULL,
+    `created_by` INT(11) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    `updated_at` TIMESTAMP DEFAULT NON UPDATE CURRENT_TIMESTAMP
+);
+
 
 
